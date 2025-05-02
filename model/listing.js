@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.schema;
+const Schema = mongoose.Schema;
 
 const listSchema = new Schema({
     title: {
@@ -12,13 +12,28 @@ const listSchema = new Schema({
     },
     image: {
         type: String,
-        set: (v) => v.trim() === '' ? "https://www.shutterstock.com/image-photo/fantastic-evening-kirkjufell-volcano-coast-260nw-530221900.jpg" : v
+        default: "https://www.shutterstock.com/image-photo/fantastic-evening-kirkjufell-volcano-coast-260nw-530221900.jpg",
+        set: (v) => (v && v.trim() !== ('')) ? v : undefined
     },
-    price: Number,
-    location: String,
-    Country: String
+    price: {
+        type: Number,
+        required: true
+    },
+    location: {
+        type: String,
+        required: true
+    },
+    country: {
+        type: String,
+        required: true
+    },
+    space : {
+        type: String,
+        enum: ['entire place', 'private room'],
+        set: (v) => v.trim().toLowerCase()
+    }
 });
 
-const Listing = mongoose.Model('listing', listSchema);
+const Listing = mongoose.model('listing', listSchema);
 
-modules.export = Listing;
+module.exports = Listing;
