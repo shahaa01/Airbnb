@@ -32,6 +32,8 @@ async function main() {
       console.log(`The error in testListing is: ${err}`);
     }
   });
+
+  app.get()
 }
 
 app.listen(PORT, () => {
