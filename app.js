@@ -33,7 +33,8 @@ async function main() {
     }
   });
 
-  app.get()
+  app.get('allListing', async (req, res) => {
+  });
 }
 
 app.listen(PORT, () => {
