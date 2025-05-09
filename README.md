@@ -5,7 +5,7 @@ This project leverages the **MEN Stack** (MongoDB, Express.js, Node.js) along wi
 
 ---
 
-## 🚀 Tech Stack
+## 🚀 Tech Stacks
 
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB (local and Atlas cloud)
