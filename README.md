@@ -1,6 +1,6 @@
 # 🏡 AirBnB Clone – Full Stack Project (MEN Stack + HTML/CSS/JS)
 
-Welcome to my full-stack development project where I build a **fully functional AirBnB clone**!  
+Welcome to my journey of full-stack development project where I build a **fully functional AirBnB clone**!  
 This project leverages the **MEN Stack** (MongoDB, Express.js, Node.js) along with **HTML, CSS, and JavaScript** for the frontend (without React).
 
 ---
