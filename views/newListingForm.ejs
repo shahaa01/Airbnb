@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/addListing" method="post">
+        <label>
+            Title
+            <input type="text" placeholder="e.g. Cozy Beachfront Cottage" name="title">
+        </label>
+
+        <label>
+            Description
+            <textarea name="description" id="description" placeholder="e.g. Escape to this charming beachfront cottage for a relaxing getaway. Enjoy stunning ocean views and easy access to the beach." cols="10"></textarea>
+        </label>
+
+        <label>
+            Add Images
+            <input type="file" name="image" id="image" accept="image/*" multiple>
+        </label>
+
+        <label>
+            Price
+            <input type="range" name="price" id="price" min="200" max="10000" step="200">
+        </label>
+
+
+
+
+    </form>
+</body>
+</html>
