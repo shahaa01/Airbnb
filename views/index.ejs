@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Listings</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+        <h1>All Listings</h1>
+    </header>
+    <main>
+        <div class="container">
+            <% for(list of data) {%>
+                <div class="ind-container">
+                    <h3> <%= list.title %> </h3>
+                    <div class="content">
+                        <img src="<%=list.image.url%>" alt="<%= list.image.filename %>">
+                        <p><%= list.description %></p>
+                        <p><%= list.location %></p>
+                        <p><%= list.country %></p>
+                        <p><%= list.price %></p>
+                    </div>
+                </div>
+                <% } %>
+        </div>
+    </main>
+</body>
+</html>

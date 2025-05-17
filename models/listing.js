@@ -16,9 +16,11 @@ const listingSchema = new Schema({
         filename : {
             type: String
         },
-        type: String,
-        default: defaultImageLink,
-        set: (v) => (v.trim() === "" || v === "") ? defaultImageLink : v
+        url: {
+            type: String,
+            default: defaultImageLink,
+            set: (v) => (v.trim() === "" || v === "") ? defaultImageLink : v
+        }
     },
     price: {
         type: Number,
