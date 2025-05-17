@@ -17,10 +17,10 @@
                     <h3> <%= list.title %> </h3>
                     <div class="content">
                         <img src="<%=list.image.url%>" alt="<%= list.image.filename %>">
-                        <p><%= list.description %></p>
-                        <p><%= list.location %></p>
-                        <p><%= list.country %></p>
-                        <p><%= list.price %></p>
+                        <p><strong>Description: </strong><%= list.description %></p>
+                        <p><strong>Location: </strong><%= list.location %></p>
+                        <p><strong>Country: </strong><%= list.country %></p>
+                        <p><strong>Price: </strong><%= list.price %></p>
                     </div>
                 </div>
                 <% } %>
