@@ -4,27 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Listings</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="/index.css">
 </head>
 <body>
     <header>
-        <h1>All Listings</h1>
+        <h1>AirBnb</h1>
     </header>
     <main>
-
+        <h1>All Listings</h1>
         <div class="container">
             <% for(list of data) {%>
                     <div class="ind-container">
                         <h3> <%= list.title %> </h3>
                         <a href="http://localhost:8080/individualListing/<%=list._id.toString()%>">
                             <div class="content">
-                                <img src="<%=list.image.url%>" alt="<%= list.image.filename %>">
+                                <img loading="lazy" src="<%=list.image.url%>" alt="<%= list.image.filename %>">
                                 <p><strong>Description: </strong><%= list.description %></p>
                                 <p><strong>Location: </strong><%= list.location %></p>
                                 <p><strong>Country: </strong><%= list.country %></p>
                                 <p><strong>Price: </strong><%= list.price %></p>
                             </div>
                         </a>
+                        <hr>
+                        <div class="buttons">
+                            <a href=""><button>Edit</button></a>
+                            <a href=""><button>Delete</button></a>
+                        </div>
                     </div>
                 <% } %>
         </div>

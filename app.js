@@ -36,18 +36,19 @@ app.get('/airbnbClone', async (req, res) => {
 
 //route to show individual listing
 app.get('/individualListing/:id', async(req, res) => {
-  console.log('Listing');
+
   try {
     const {id} = req.params;
-    const requiredListing = await Listing.findById(id);
-    console.log(requiredListing);
-  
+    const requiredListing = await Listing.findById(id);  
     res.render('individualList', {list: requiredListing});
   } catch(err) {
     console.log(`Error in individual Listing route - ${err.message}`);
   }
 
 });
+
+//route to edit listing 
+
 
 
 app.listen(PORT, () => {
