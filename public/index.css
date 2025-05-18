@@ -25,6 +25,10 @@ header h1 {
     justify-content: space-evenly;
 }
 
+a {
+    all: unset;
+}
+
 .ind-container h3{
     text-align: center;
 }

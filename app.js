@@ -18,11 +18,12 @@ async function main() {
 }
 
 //routes here
-app.get('/home', (req, res) => {
+app.get('/', (req, res) => {
   res.send("Hii Everything is working fine.");
 });
 
-app.get('/showListings', async (req, res) => {
+//home route - which will show all the listings 
+app.get('/airbnbClone', async (req, res) => {
 
   try {
     const data = await Listing.find({});
@@ -31,7 +32,22 @@ app.get('/showListings', async (req, res) => {
     console.log(`Error in showing the lists - ${err.message}`);
   }
 
-})
+});
+
+//route to show individual listing
+app.get('/individualListing/:id', async(req, res) => {
+  console.log('Listing');
+  try {
+    const {id} = req.params;
+    const requiredListing = await Listing.findById(id);
+    console.log(requiredListing);
+  
+    res.render('individualList', {list: requiredListing});
+  } catch(err) {
+    console.log(`Error in individual Listing route - ${err.message}`);
+  }
+
+});
 
 
 app.listen(PORT, () => {
