@@ -48,6 +48,9 @@ app.get('/individualListing/:id', async(req, res) => {
 });
 
 //route to edit listing 
+app.get('/editList/:id', async (req, res) => {
+  res.send('editForm');
+})
 
 
 
