@@ -31,7 +31,7 @@ app.get('/airbnbClone', async (req, res) => {
 
   try {
     const data = await Listing.find({});
-    res.render('index', {data});
+    res.render('pages/index', {data});
   } catch(err) {
     console.log(`Error in showing the lists - ${err.message}`);
   }
@@ -44,7 +44,7 @@ app.get('/individualListing/:id', async(req, res) => {
   try {
     const {id} = req.params;
     const requiredListing = await Listing.findById(id);  
-    res.render('individualList', {list: requiredListing});
+    res.render('pages/individualList', {list: requiredListing});
   } catch(err) {
     console.log(`Error in individual Listing route - ${err.message}`);
   }
@@ -55,7 +55,7 @@ app.get('/individualListing/:id', async(req, res) => {
 app.get('/editList/:id', async (req, res) => {
   const {id} = req.params;
   const requiredListing = await Listing.findById(id);
-  res.render('editForm', {listing: requiredListing});
+  res.render('pages/editForm', {listing: requiredListing});
 });
 
 //route to update from the edit form
@@ -72,7 +72,7 @@ app.put('/editList/:id', async (req, res) => {
 
 //route to show add new list form
 app.get('/addList', async (req, res) => {
-  res.render('newListingForm');
+  res.render('pages/newListingForm');
 });
 
 //route to add in the db
@@ -92,9 +92,7 @@ app.delete('/deleteList/:id', async(req, res) => {
     console.log(`Error in delete route - ${err.message}`);
   }
 
-})
-
-
+});
 
 app.listen(PORT, () => {
   console.log(`Server is listening at http://localhost:${PORT}`);
