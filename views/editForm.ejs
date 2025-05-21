@@ -3,36 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit <%= list.title %></title>
+    <title>Edit <%= listing .title %></title>
+    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/form.css">
 </head>
 <body>
-    <header>
-        <h1>AirBnb</h1>
-    </header>
+    <%- include('./partials/header.ejs') %>   
     <main>
-        <h1>All Listings</h1>
         <div class="container">
-            <% for(list of data) {%>
-                    <div class="ind-container">
-                        <h3> <%= list.title %> </h3>
-                        <a href="http://localhost:8080/individualListing/<%=list._id.toString()%>">
-                            <div class="content">
-                                <img loading="lazy" src="<%=list.image.url%>" alt="<%= list.image.filename %>">
-                                <p><strong>Description: </strong><%= list.description %></p>
-                                <p><strong>Location: </strong><%= list.location %></p>
-                                <p><strong>Country: </strong><%= list.country %></p>
-                                <p><strong>Price: &#8377; </strong><%= list.price.toLocaleString("en-IN") %></p>
-                            </div>
-                        </a>
-                        <hr>
-                        <div class="buttons">
-                            <a href=""><button>Edit</button></a>
-                            <a href=""><button>Delete</button></a>
-                        </div>
-                    </div>
-                <% } %>
+                <div class="ind-container">
+                    <form action="/editList/<%= listing._id.toString() %>?_method=PUT" method="post">
+                        <label>
+                            Title
+                            <textarea name="listing[title]"><%= listing.title %></textarea>
+                        </label>
+
+                        <label>
+                            Description
+                            <textarea name="listing[description]" rows="10"><%= listing.description %></textarea>
+                        </label>
+
+                        <label>
+                            Image
+                            <textarea class="img-textarea" name="listing[image][url]" rows="6"><%= listing.image.url %></textarea>
+                        </label>
+
+                        <label>
+                            Price
+                            <input id="slider" type="range" name="listing[price]" value="<%= listing.price %>" min="0" max="<%= listing.price + 3000 %>" step="50">
+                            <p id="slider-value"><%= listing.price %></p>
+                        </label>
+
+                        <label>
+                            Location
+                            <input type="text" name="listing[location]" value="<%= listing.location %>">
+                        </label>
+
+                        <label>
+                            Country
+                            <input type="text" name="listing[country]" value="<%= listing.country %>">
+                        </label>
+
+                        <button class="buttons" type="submit">Update</button>
+                    </form>
+                </div>
         </div>
     </main>
     
 </body>
+<script>
+    const slider = document.getElementById('slider');
+    const value = document.getElementById('slider-value');
+
+    slider.addEventListener('input', () => {
+        value.textContent = slider.value;
+    })
+</script>
 </html>

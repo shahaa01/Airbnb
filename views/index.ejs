@@ -25,14 +25,29 @@
                         </a>
                         <hr>
                         <div class="buttons">
-                            <a href=""><button>Edit</button></a>
-                            <a href=""><button>Delete</button></a>
+                            <a href="http://localhost:8080/editList/<%= list._id.toString() %>"><button>Edit</button></a>
+                            <form action="/deleteList/<%= list._id.toString() %>?_method=DELETE" method="post">
+                                <button class="delete" type="submit">Delete</button>
+                            </form>
                         </div>
                     </div>
                 <% } %>
         </div>
+        <div class="add">
+            <a href="http://localhost:8080/addList">
+            <button>Add new listing</button>
+        </a>
+        </div>
     </main>
-
-
 </body>
+<script>
+    const deleteBtn = document.querySelector('.delete');
+
+    deleteBtn.addEventListener('click', () => {
+        const confired = confirm('Do you really want to Delete? It cannot be undone.');
+        if(!confirmed) {
+            e.preventDefault();
+        }
+    });
+</script>
 </html>

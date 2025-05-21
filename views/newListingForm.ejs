@@ -3,33 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Add new Listing</title>
+    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/form.css">
 </head>
 <body>
-    <form action="/addListing" method="post">
-        <label>
-            Title
-            <input type="text" placeholder="e.g. Cozy Beachfront Cottage" name="title">
-        </label>
+    <%- include('./partials/header.ejs') %>  
+    <h3>Add Listing</h3> 
+    <main>
+        <div class="container">
+                <div class="ind-container">
+                    <form action="/addList" method="post">
+                        <label>
+                            Title
+                            <textarea name="listing[title]" placeholder="e.g. Cozy Beachfront Cottage"></textarea>
+                        </label>
 
-        <label>
-            Description
-            <textarea name="description" id="description" placeholder="e.g. Escape to this charming beachfront cottage for a relaxing getaway. Enjoy stunning ocean views and easy access to the beach." cols="10"></textarea>
-        </label>
+                        <label>
+                            Description
+                            <textarea name="listing[description]" rows="10" placeholder="e.g. Escape to this charming beachfront cottage for a relaxing getaway. Enjoy stunning ocean views and easy access to the beach."></textarea>
+                        </label>
 
-        <label>
-            Add Images
-            <input type="file" name="image" id="image" accept="image/*" multiple>
-        </label>
+                        <label>
+                            Image
+                            <textarea class="img-textarea" name="listing[image][url]" placeholder="e.g. Paste the url of your image" rows="6"></textarea>
+                        </label>
 
-        <label>
-            Price
-            <input type="range" name="price" id="price" min="200" max="10000" step="200">
-        </label>
+                        <label>
+                            Price
+                            <input id="slider" type="range" name="listing[price]" min="0" max="10000" step="100">
+                            <p id="slider-value"><strong>Price: &#8377; 5000</strong></p>
+                        </label>
 
+                        <label>
+                            Location
+                            <input type="text" placeholder="e.g. New York City" name="listing[location]">
+                        </label>
 
+                        <label>
+                            Country
+                            <input type="text" placeholder="e.g. United States" name="listing[country]">
+                        </label>
 
-
-    </form>
+                        <button class="buttons" type="submit">Add Listing</button>
+                    </form>
+                </div>
+        </div>
+    </main>
+    
 </body>
+<script>
+    const slider = document.getElementById('slider');
+    const value = document.getElementById('slider-value');
+
+    slider.addEventListener('input', () => {
+        value.innerHTML = `<strong>Price: &#8377; ${slider.value}`
+    })
+</script>
 </html>

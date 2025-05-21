@@ -1,0 +1,59 @@
+body main {
+    margin: 0;
+}
+
+body .container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.ind-container {
+    height: 80%;
+    min-height: fit-content;
+    margin: 0;
+
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+textarea {
+    width: 90%;
+    padding: 0.4rem;
+
+}
+
+.img-textarea {
+    min-height: fit-content;
+    padding: 0.4rem;
+}
+
+input {
+    height: 2rem;
+    padding: 0.4rem;
+
+}
+
+.ind-container {
+    transform: scaleY(1);
+}
+
+#slider-value {
+    text-align: center;
+    font-size: x-large;
+    font-weight: 700;
+    color: rgb(130, 24, 2);
+}
