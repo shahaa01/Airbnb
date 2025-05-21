@@ -14,40 +14,50 @@
             <% for(list of data) {%>
                     <div class="ind-container">
                         <h3> <%= list.title %> </h3>
-                        <a href="http://localhost:8080/individualListing/<%=list._id.toString()%>">
-                            <div class="content">
+                        <a href="/individualListing/<%=list._id.toString()%>">
+                            <section class="content">
                                 <img loading="lazy" src="<%=list.image.url%>" alt="<%= list.image.filename %>">
                                 <p><strong>Description: </strong><%= list.description %></p>
                                 <p><strong>Location: </strong><%= list.location %></p>
                                 <p><strong>Country: </strong><%= list.country %></p>
                                 <p><strong>Price: &#8377; </strong><%= list.price.toLocaleString("en-IN") %></p>
-                            </div>
+                            </section>
                         </a>
                         <hr>
-                        <div class="buttons">
-                            <a href="http://localhost:8080/editList/<%= list._id.toString() %>"><button>Edit</button></a>
+                        <!-- <div class="buttons"> -->
+                            <a href="/editList/<%= list._id.toString() %>" class="btns">Edit</a>
                             <form action="/deleteList/<%= list._id.toString() %>?_method=DELETE" method="post">
-                                <button class="delete" type="submit">Delete</button>
+                                <button class="delete btns" type="submit">Delete</button>
                             </form>
-                        </div>
+                        <!-- </div> -->
                     </div>
                 <% } %>
         </div>
         <div class="add">
-            <a href="http://localhost:8080/addList">
-            <button>Add new listing</button>
+            <a href="/addList">
+            <button class="btns">Add new listing</button>
         </a>
         </div>
     </main>
-</body>
 <script>
-    const deleteBtn = document.querySelector('.delete');
+document.addEventListener("DOMContentLoaded", () => {
+  // grab ALL delete forms
+  const deleteForms = document.querySelectorAll('form[action^="/deleteList/"]');
 
-    deleteBtn.addEventListener('click', () => {
-        const confired = confirm('Do you really want to Delete? It cannot be undone.');
-        if(!confirmed) {
-            e.preventDefault();
-        }
+  deleteForms.forEach(form => {
+    form.addEventListener("submit", e => {
+      // show confirm on *every* delete
+      const confirmed = confirm('Are you sure you want to delete? It cannot be recovered/undone.')
+      if (!confirmed) {
+        e.preventDefault();
+      }
     });
+  });
+
+  console.log("Attached confirm to", deleteForms.length, "form(s).");
+});
 </script>
+
+</body>
+
 </html>

@@ -83,10 +83,15 @@ app.post('/addList', async(req, res) => {
 });
 
 //route to delete
-app.delete('/deleteList', async(req, res) => {
-  const {id} = req.params;
+app.delete('/deleteList/:id', async(req, res) => {
+  try {
+      const {id} = req.params;
   await Listing.findByIdAndDelete(id);
-  res.redirect('/airbnbClone()')
+  res.redirect('/airbnbClone')
+  } catch(err) {
+    console.log(`Error in delete route - ${err.message}`);
+  }
+
 })
 
 

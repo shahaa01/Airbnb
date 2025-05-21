@@ -20,10 +20,12 @@
                             <p><strong>Price: &#8377; </strong><%= list.price %></p>
                         </div>
                     <hr>
-                    <div class="buttons">
-                        <a href=""><button>Edit</button></a>
-                        <a href=""><button>Delete</button></a>
-                    </div>
+                        <!-- <div class="buttons"> -->
+                            <a href="/editList/<%= list._id.toString() %>" class="btns">Edit</a>
+                            <form action="/deleteList/<%= list._id.toString() %>?_method=DELETE" method="post">
+                                <button class="delete btns" type="submit">Delete</button>
+                            </form>
+                        <!-- </div> -->
                 </div>
         </div>
     </main>

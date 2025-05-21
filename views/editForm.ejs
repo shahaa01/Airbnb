@@ -31,7 +31,7 @@
                         <label>
                             Price
                             <input id="slider" type="range" name="listing[price]" value="<%= listing.price %>" min="0" max="<%= listing.price + 3000 %>" step="50">
-                            <p id="slider-value"><%= listing.price %></p>
+                            <p id="slider-value"><strong>Price: &#8377; <%= listing.price %></strong></p>
                         </label>
 
                         <label>
@@ -44,7 +44,7 @@
                             <input type="text" name="listing[country]" value="<%= listing.country %>">
                         </label>
 
-                        <button class="buttons" type="submit">Update</button>
+                        <button class="btns" type="submit">Update</button>
                     </form>
                 </div>
         </div>
@@ -56,7 +56,6 @@
     const value = document.getElementById('slider-value');
 
     slider.addEventListener('input', () => {
-        value.textContent = slider.value;
-    })
+        value.innerHTML = `<strong>Price: &#8377; ${slider.value}`    });
 </script>
 </html>
