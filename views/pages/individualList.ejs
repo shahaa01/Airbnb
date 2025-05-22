@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= list.title %></title>
-    <link rel="stylesheet" href="/index.css">
-</head>
-<body>
-    <%- include('../partials/header.ejs') %>
-    <main>
+<% layout('layouts/boilerplate.ejs') %>
+<% block('title').append(`<title>${list.title}</title>`) %>
+<% block('css').append('<link rel="stylesheet" href="styles/index.css"') %>
         <div class="container">
                 <div class="ind-container">
                     <h3> <%= list.title %> </h3>
@@ -28,6 +20,4 @@
                         <!-- </div> -->
                 </div>
         </div>
-    </main>
-</body>
-</html>
+<% block('script').append('<script src="js/deleteListingForm.js"></script>') %>

@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add new Listing</title>
-    <link rel="stylesheet" href="/index.css">
-    <link rel="stylesheet" href="/form.css">
-</head>
-<body>
-    <%- include('../partials/header.ejs') %>  
-    <h3>Add Listing</h3> 
-    <main>
+<% layout('layouts/boilerplate.ejs') %>
+<% block('title').append('<title>New Listing Form</title>') %>
+<% block('css').append('<link rel="stylesheet" href="styles/index.css">') %>
+<% block('css').append('<link rel="stylesheet" href="styles/form.css">') %>
         <div class="container">
                 <div class="ind-container">
                     <form action="/addList" method="post">
@@ -49,15 +40,6 @@
                     </form>
                 </div>
         </div>
-    </main>
-    
-</body>
-<script>
-    const slider = document.getElementById('slider');
-    const value = document.getElementById('slider-value');
+    <% block('script').append('<script src="js/slider.js"></script>') %>
 
-    slider.addEventListener('input', () => {
-        value.innerHTML = `<strong>Price: &#8377; ${slider.value}`
-    })
-</script>
-</html>
+    

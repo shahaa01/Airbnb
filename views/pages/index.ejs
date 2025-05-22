@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Listings</title>
-    <link rel="stylesheet" href="/index.css">
-</head>
-<body>
-    <%- include('../partials/header.ejs') %>
-    <main>
+<% layout('layouts/boilerplate.ejs') %>
+<% block('title').append('<title>AirBnb</title>') %>
+<% block('css').append('<link rel="stylesheet" href="styles/index.css"') %>
         <h1>All Listings</h1>
         <div class="container">
             <% for(list of data) {%>
@@ -38,26 +30,4 @@
             <button class="btns">Add new listing</button>
         </a>
         </div>
-    </main>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  // grab ALL delete forms
-  const deleteForms = document.querySelectorAll('form[action^="/deleteList/"]');
-
-  deleteForms.forEach(form => {
-    form.addEventListener("submit", e => {
-      // show confirm on *every* delete
-      const confirmed = confirm('Are you sure you want to delete? It cannot be recovered/undone.')
-      if (!confirmed) {
-        e.preventDefault();
-      }
-    });
-  });
-
-  console.log("Attached confirm to", deleteForms.length, "form(s).");
-});
-</script>
-
-</body>
-
-</html>
+        <% block('script').append('<script src="js/deleteListingForm.js"></script>') %>

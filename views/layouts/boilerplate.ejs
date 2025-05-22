@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- block('title').toString() %>
+    <%- block('css').toString() %>
+</head>
+<body>
+    <%- include('../partials/header.ejs') %>
+    <main>
+        <%- body %>
+    </main>
+    <%- include('../partials/footer.ejs') %>
+    <%- block('script').toString() %>
+</body>
+</html>
