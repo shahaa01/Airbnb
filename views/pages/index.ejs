@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate.ejs') %>
 <% block('title').append('<title>AirBnb</title>') %>
-<% block('css').append('<link rel="stylesheet" href="styles/index.css"') %>
+<% block('css').append('<link rel="stylesheet" href="/styles/index.css"') %>
         <h1>All Listings</h1>
         <div class="container">
             <% for(list of data) {%>
@@ -30,4 +30,4 @@
             <button class="btns">Add new listing</button>
         </a>
         </div>
-        <% block('script').append('<script src="js/deleteListingForm.js"></script>') %>
+        <% block('script').append('<script src="/js/deleteListingForm.js"></script>') %>

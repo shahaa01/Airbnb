@@ -1,7 +1,3 @@
-body main {
-    margin: 0;
-}
-
 body .container {
     height: 100vh;
     display: flex;
@@ -13,7 +9,7 @@ body .container {
 
 .ind-container {
     height: 80%;
-    min-height: fit-content;
+    max-height: fit-content;
     margin: 0;
 
 }

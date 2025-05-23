@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%- block('title').toString() %>
-    <link rel="stylesheet" href="styles/footer.css">
+    <%- block('title')%>
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -15,14 +14,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
-    <%- block('css').toString() %>
+    <link rel="stylesheet" href="/styles/footer.css">
+    <%- block('css')%>
 </head>
 <body>
     <%- include('../components/navbar.ejs') %>
     <main>
         <%- body %>
     </main>
-    <%- include('../partials/footer.ejs') %>
-    <%- block('script').toString() %>
+    <%- include('../components/footer.ejs') %>
+    <%- block('script')%>
 </body>
 </html>

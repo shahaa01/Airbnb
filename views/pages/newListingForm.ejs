@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate.ejs') %>
 <% block('title').append('<title>New Listing Form</title>') %>
-<% block('css').append('<link rel="stylesheet" href="styles/index.css">') %>
-<% block('css').append('<link rel="stylesheet" href="styles/form.css">') %>
+<% block('css').append('<link rel="stylesheet" href="/styles/index.css">') %>
+<% block('css').append('<link rel="stylesheet" href="/styles/form.css">') %>
         <div class="container">
                 <div class="ind-container">
                     <form action="/addList" method="post">
@@ -12,12 +12,12 @@
 
                         <label>
                             Description
-                            <textarea name="listing[description]" rows="10" placeholder="e.g. Escape to this charming beachfront cottage for a relaxing getaway. Enjoy stunning ocean views and easy access to the beach."></textarea>
+                            <textarea name="listing[description]" rows="5" placeholder="e.g. Escape to this charming beachfront cottage for a relaxing getaway. Enjoy stunning ocean views and easy access to the beach."></textarea>
                         </label>
 
                         <label>
                             Image
-                            <textarea class="img-textarea" name="listing[image][url]" placeholder="e.g. Paste the url of your image" rows="6"></textarea>
+                            <textarea class="img-textarea" name="listing[image][url]" placeholder="e.g. Paste the url of your image" rows="4"></textarea>
                         </label>
 
                         <label>
@@ -40,6 +40,6 @@
                     </form>
                 </div>
         </div>
-    <% block('script').append('<script src="js/slider.js"></script>') %>
+    <% block('script').append('<script src="/js/slider.js"></script>') %>
 
     

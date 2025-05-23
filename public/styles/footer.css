@@ -2,7 +2,8 @@ footer {
     border-top: 1px solid rgba(0, 0, 0, 0.109);
     min-height: fit-content;
     margin-bottom: 0.5rem;
-    background-color: #F7F7F7;
+    background-color: #F7F7F7;    
+    width: 100%;
 
 }
 
@@ -97,6 +98,7 @@ footer {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 0.5rem;
+    gap: 1.2rem;
     padding: 0.8rem;
+    flex-wrap: wrap;
 }

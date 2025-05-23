@@ -1,10 +1,10 @@
 <% layout('layouts/boilerplate.ejs') %>
-<% block('title').append('<title>New Listing Form</title>') %>
-<% block('css').append('<link rel="stylesheet" href="styles/index.css">') %>
-<% block('css').append('<link rel="stylesheet" href="styles/form.css">') %>
+<% block('title').append('<title>Edit Listing</title>') %>
+<% block('css').append('<link rel="stylesheet" href="/styles/index.css">') %>
+<% block('css').append('<link rel="stylesheet" href="/styles/form.css">') %>
         <div class="container">
                 <div class="ind-container">
-                    <form action="/editList/<%= listing._id.toString() %>?_method=PUT" method="post">
+                    <form action="/addList" method="post">
                         <label>
                             Title
                             <textarea name="listing[title]"><%= listing.title %></textarea>
@@ -22,23 +22,24 @@
 
                         <label>
                             Price
-                            <input id="slider" type="range" name="listing[price]" value="<%= listing.price %>" min="0" max="<%= listing.price + 3000 %>" step="50">
+                            <input id="slider" type="range" name="listing[price]" min="0" max="10000" step="100">
                             <p id="slider-value"><strong>Price: &#8377; <%= listing.price %></strong></p>
                         </label>
 
                         <label>
                             Location
-                            <input type="text" name="listing[location]" value="<%= listing.location %>">
+                            <input type="text" name="listing[location]" value="listing.location">
                         </label>
 
                         <label>
                             Country
-                            <input type="text" name="listing[country]" value="<%= listing.country %>">
+                            <input type="text" value="listing.country" name="listing[country]">
                         </label>
 
-                        <button class="btns" type="submit">Update</button>
+                        <button class="buttons btns" type="submit">Update</button>
                     </form>
                 </div>
         </div>
-<% block('script').append('<script src="js/slider.js"></script>') %>
-        
+    <% block('script').append('<script src="/js/slider.js"></script>') %>
+
+    
