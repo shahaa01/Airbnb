@@ -66,6 +66,7 @@ app.get('/editList/:id', async (req, res) => {
 app.put('/editList/:id', async (req, res) => {
   try {
       const {id} = req.params;
+      console.log(req.body.listing);
       const requiredListing = await Listing.findByIdAndUpdate(id, req.body.listing);
       res.redirect(`/individualListing/${id}`);
   } catch(err) {
@@ -96,6 +97,10 @@ app.delete('/deleteList/:id', async(req, res) => {
     console.log(`Error in delete route - ${err.message}`);
   }
 
+});
+
+app.use((req, res) => {
+  res.render('pages/pageNotFound');
 });
 
 app.listen(PORT, () => {

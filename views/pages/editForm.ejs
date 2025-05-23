@@ -4,36 +4,36 @@
 <% block('css').append('<link rel="stylesheet" href="/styles/form.css">') %>
         <div class="container">
                 <div class="ind-container">
-                    <form action="/addList" method="post">
+                    <form class="listingForm" action="/editList/<%= listing._id.toString() %>?_method=PUT" method="post">
                         <label>
-                            Title
+                            <p>Title</p>
                             <textarea name="listing[title]"><%= listing.title %></textarea>
                         </label>
 
                         <label>
-                            Description
+                            <p>Description</p>
                             <textarea name="listing[description]" rows="10"><%= listing.description %></textarea>
                         </label>
 
                         <label>
-                            Image
+                            <p>Image</p>
                             <textarea class="img-textarea" name="listing[image][url]" rows="6"><%= listing.image.url %></textarea>
                         </label>
 
                         <label>
-                            Price
+                            <p>Price</p>
                             <input id="slider" type="range" name="listing[price]" min="0" max="10000" step="100">
                             <p id="slider-value"><strong>Price: &#8377; <%= listing.price %></strong></p>
                         </label>
 
                         <label>
-                            Location
-                            <input type="text" name="listing[location]" value="listing.location">
+                            <p>Location</p>
+                            <input type="text" name="listing[location]" value="<%= listing.location %>">
                         </label>
 
                         <label>
-                            Country
-                            <input type="text" value="listing.country" name="listing[country]">
+                            <p>Country</p>
+                            <input type="text" value="<%= listing.country %>" name="listing[country]">
                         </label>
 
                         <button class="buttons btns" type="submit">Update</button>

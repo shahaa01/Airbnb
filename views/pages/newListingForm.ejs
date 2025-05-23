@@ -4,35 +4,38 @@
 <% block('css').append('<link rel="stylesheet" href="/styles/form.css">') %>
         <div class="container">
                 <div class="ind-container">
-                    <form action="/addList" method="post">
+                    <form class="listingForm" action="/addList" method="post">
                         <label>
-                            Title
+                            <p>Title</p>
                             <textarea name="listing[title]" placeholder="e.g. Cozy Beachfront Cottage"></textarea>
                         </label>
 
                         <label>
-                            Description
+                            <p>Description</p>
                             <textarea name="listing[description]" rows="5" placeholder="e.g. Escape to this charming beachfront cottage for a relaxing getaway. Enjoy stunning ocean views and easy access to the beach."></textarea>
                         </label>
 
                         <label>
-                            Image
+                            <div class="txt-con">
+                                                            <p>Image</p>
+
+                            </div>
                             <textarea class="img-textarea" name="listing[image][url]" placeholder="e.g. Paste the url of your image" rows="4"></textarea>
                         </label>
 
                         <label>
-                            Price
+                            <p>Price</p>
                             <input id="slider" type="range" name="listing[price]" min="0" max="10000" step="100">
                             <p id="slider-value"><strong>Price: &#8377; 5000</strong></p>
                         </label>
 
                         <label>
-                            Location
+                            <p>Location</p>
                             <input type="text" placeholder="e.g. New York City" name="listing[location]">
                         </label>
 
                         <label>
-                            Country
+                            <p>Country</p>
                             <input type="text" placeholder="e.g. United States" name="listing[country]">
                         </label>
 
