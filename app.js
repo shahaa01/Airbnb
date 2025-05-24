@@ -9,7 +9,7 @@ const engine = require('ejs-mate');
 const ExpressErr = require('./errors/expressErr');
 const asyncWrap = require('./utils/asyncWrap');
 const joi = require('joi');
-const ListingServerSchema = require('./Validations/schemaValidation');
+const ListingServerSchema = require('./Validations/listingSchemaValidation');
 
 //lets set ejs and required middlewares here
 app.set("view engine", 'ejs');
