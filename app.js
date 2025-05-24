@@ -8,6 +8,8 @@ const Listing = require('./models/listing');
 const engine = require('ejs-mate');
 const ExpressErr = require('./errors/expressErr');
 const asyncWrap = require('./utils/asyncWrap');
+const joi = require('joi');
+const ListingServerSchema = require('./schemaValidation');
 
 //lets set ejs and required middlewares here
 app.set("view engine", 'ejs');
@@ -23,6 +25,17 @@ main().then(() => console.log('Database Connected Successfully🚀')).catch(err 
 
 async function main() {
   await mongoose.connect('mongodb://127.0.0.1:27017/airbnb');
+}
+
+//middleware function to validate schemas
+const validateSchema = (req, res, next) => {
+  let {error} = ListingServerSchema.validate(req.body);
+  if(error) {
+    return next(new ExpressErr(400, error.details[0].message, req.originalUrl));
+  } 
+
+  next();
+
 }
 
 //routes here
@@ -62,7 +75,7 @@ app.get('/editList/:id', asyncWrap(async (req, res, next) => {
 }));
 
 //route to update from the edit form
-app.put('/editList/:id', asyncWrap(async (req, res, next ) => {
+app.put('/editList/:id', validateSchema, asyncWrap(async (req, res, next ) => {
 
       const {id} = req.params;
       if(!req.body.listing) {
@@ -83,7 +96,7 @@ app.get('/addList', asyncWrap(async (req, res, next) => {
 }));
 
 //route to add in the db
-app.post('/addList', asyncWrap(async(req, res, next) => {
+app.post('/addList', validateSchema, asyncWrap(async(req, res, next) => {
    if(!req.body.listing) {
     return next(new ExpressErr(400, "No listing Found.", "/addList"));
   }

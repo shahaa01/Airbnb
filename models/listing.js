@@ -10,7 +10,7 @@ const listingSchema = new Schema({
     },
     description: {
         type: String,
-        default: "No descriptions available."
+        required: true
     },
     image: {
         filename : {
