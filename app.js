@@ -44,7 +44,7 @@ app.get('/individualListing/:id', asyncWrap(async(req, res, next) => {
     const {id} = req.params;
     const requiredListing = await Listing.findById(id); 
     if(!requiredListing) {
-      next(new ExpressErr(400, "URL is incorrect. Page not Found."));
+      return next(new ExpressErr(400, "URL is incorrect. Page not Found."));
     } 
     res.render('pages/individualList', {list: requiredListing});
 
@@ -56,7 +56,7 @@ app.get('/editList/:id', asyncWrap(async (req, res, next) => {
   const {id} = req.params;
   const requiredListing = await Listing.findById(id);
   if(!requiredListing) {
-    next(new ExpressErr(400, "URL is incorrect. Page not Found."));
+    return next(new ExpressErr(400, "URL is incorrect. Page not Found."));
   } 
   res.render('pages/editForm', {listing: requiredListing});
 }));
@@ -66,11 +66,11 @@ app.put('/editList/:id', asyncWrap(async (req, res, next ) => {
 
       const {id} = req.params;
       if(!req.body.listing) {
-        next(new ExpressErr(400, "No listing found. Bad Request"));
+        return next(new ExpressErr(400, "No listing found. Bad Request"));
       }
       const requiredListing = await Listing.findByIdAndUpdate(id, req.body.listing);
       if(!requiredListing) {
-        next(new ExpressErr(400, "Something went wrong - User ID is missing"));
+        return next(new ExpressErr(400, "Something went wrong - User ID is missing"));
       }
       res.redirect(`/individualListing/${id}`);
 
@@ -85,7 +85,7 @@ app.get('/addList', asyncWrap(async (req, res, next) => {
 //route to add in the db
 app.post('/addList', asyncWrap(async(req, res, next) => {
    if(!req.body.listing) {
-    next(new ExpressErr(400, "No listing Found.", "/addList"));
+    return next(new ExpressErr(400, "No listing Found.", "/addList"));
   }
   const newListing = new Listing(req.body.listing);
   await newListing.save();
@@ -96,8 +96,8 @@ app.post('/addList', asyncWrap(async(req, res, next) => {
 app.delete('/deleteList/:id', asyncWrap(async(req, res, next) => {
 
   const {id} = req.params;
-  if(!(Listing.findById(id))) {
-    next(new ExpressErr(400, "Something went wrong - User Id not Found."));
+  if(!(await Listing.findById(id))) {
+    return next(new ExpressErr(400, "Something went wrong - User Id not Found."));
   }
   await Listing.findByIdAndDelete(id);
   res.redirect('/airbnbClone')
