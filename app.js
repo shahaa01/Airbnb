@@ -100,7 +100,7 @@ app.delete('/deleteList/:id', async(req, res) => {
 });
 
 app.use((req, res) => {
-  res.render('pages/pageNotFound');
+  res.status(404).render('pages/pageNotFound');
 });
 
 app.listen(PORT, () => {
