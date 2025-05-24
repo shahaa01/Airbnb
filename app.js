@@ -6,6 +6,8 @@ const path = require('path');
 const methodOverride = require('method-override');
 const Listing = require('./models/listing');
 const engine = require('ejs-mate');
+const ExpressErr = require('./errors/expressErr');
+const asyncWrap = require('./utils/asyncWrap');
 
 //lets set ejs and required middlewares here
 app.set("view engine", 'ejs');
@@ -29,78 +31,88 @@ app.get('/', (req, res) => {
 });
 
 //home route - which will show all the listings 
-app.get('/airbnbClone', async (req, res) => {
-
-  try {
+app.get('/airbnbClone', asyncWrap(async (req, res) => {
     const data = await Listing.find({});
     res.render('pages/index', {
       data
     });
-  } catch(err) {
-    console.log(`Error in showing the lists - ${err.message}`);
-  }
-
-});
+}));
 
 //route to show individual listing
-app.get('/individualListing/:id', async(req, res) => {
+app.get('/individualListing/:id', asyncWrap(async(req, res, next) => {
 
-  try {
     const {id} = req.params;
-    const requiredListing = await Listing.findById(id);  
+    const requiredListing = await Listing.findById(id); 
+    if(!requiredListing) {
+      next(new ExpressErr(400, "URL is incorrect. Page not Found."));
+    } 
     res.render('pages/individualList', {list: requiredListing});
-  } catch(err) {
-    console.log(`Error in individual Listing route - ${err.message}`);
-  }
 
-});
+
+}));
 
 //route to get edit form 
-app.get('/editList/:id', async (req, res) => {
+app.get('/editList/:id', asyncWrap(async (req, res, next) => {
   const {id} = req.params;
   const requiredListing = await Listing.findById(id);
+  if(!requiredListing) {
+    next(new ExpressErr(400, "URL is incorrect. Page not Found."));
+  } 
   res.render('pages/editForm', {listing: requiredListing});
-});
+}));
 
 //route to update from the edit form
-app.put('/editList/:id', async (req, res) => {
-  try {
-      const {id} = req.params;
-      console.log(req.body.listing);
-      const requiredListing = await Listing.findByIdAndUpdate(id, req.body.listing);
-      res.redirect(`/individualListing/${id}`);
-  } catch(err) {
-    console.log(`Error in update route - ${err.message}`);
-  }
+app.put('/editList/:id', asyncWrap(async (req, res, next ) => {
 
-});
+      const {id} = req.params;
+      if(!req.body.listing) {
+        next(new ExpressErr(400, "No listing found. Bad Request"));
+      }
+      const requiredListing = await Listing.findByIdAndUpdate(id, req.body.listing);
+      if(!requiredListing) {
+        next(new ExpressErr(400, "Something went wrong - User ID is missing"));
+      }
+      res.redirect(`/individualListing/${id}`);
+
+
+}));
 
 //route to show add new list form
-app.get('/addList', async (req, res) => {
+app.get('/addList', asyncWrap(async (req, res, next) => {
   res.render('pages/newListingForm');
-});
+}));
 
 //route to add in the db
-app.post('/addList', async(req, res) => {
+app.post('/addList', asyncWrap(async(req, res, next) => {
+   if(!req.body.listing) {
+    next(new ExpressErr(400, "No listing Found.", "/addList"));
+  }
   const newListing = new Listing(req.body.listing);
   await newListing.save();
   res.redirect('/airbnbClone');
-});
+}));
 
 //route to delete
-app.delete('/deleteList/:id', async(req, res) => {
-  try {
-      const {id} = req.params;
+app.delete('/deleteList/:id', asyncWrap(async(req, res, next) => {
+
+  const {id} = req.params;
+  if(!(Listing.findById(id))) {
+    next(new ExpressErr(400, "Something went wrong - User Id not Found."));
+  }
   await Listing.findByIdAndDelete(id);
   res.redirect('/airbnbClone')
-  } catch(err) {
-    console.log(`Error in delete route - ${err.message}`);
-  }
 
+
+}));
+
+//this is error handling middleware which only handles sync errors - for async we used asyncWrap Functions
+app.use((err, req, res, next) => {
+  let {status = 500, message = "Something went wrong, we are extremely sorry!", redirectLink} = err;
+  res.status(status).render('pages/error', {errMessage: err.message, errStatus: status, link: redirectLink});
 });
 
 app.use((req, res) => {
-  res.status(404).render('pages/pageNotFound');
+  res.status(404).render('pages/error', {errStatus: 404, errMessage: "Invalid URL! Page Not Found", link: "/airbnbClone"});
 });
 
 app.listen(PORT, () => {

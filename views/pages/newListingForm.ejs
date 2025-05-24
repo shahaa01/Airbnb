@@ -7,19 +7,15 @@
                     <form class="listingForm" action="/addList" method="post">
                         <label>
                             <p>Title</p>
-                            <textarea name="listing[title]" placeholder="e.g. Cozy Beachfront Cottage"></textarea>
+                            <textarea name="listing[title]" placeholder="e.g. Cozy Beachfront Cottage" required></textarea>
                         </label>
 
                         <label>
                             <p>Description</p>
-                            <textarea name="listing[description]" rows="5" placeholder="e.g. Escape to this charming beachfront cottage for a relaxing getaway. Enjoy stunning ocean views and easy access to the beach."></textarea>
+                            <textarea name="listing[description]" rows="5" placeholder="e.g. Escape to this charming beachfront cottage for a relaxing getaway. Enjoy stunning ocean views and easy access to the beach." required></textarea>
                         </label>
 
                         <label>
-                            <div class="txt-con">
-                                                            <p>Image</p>
-
-                            </div>
                             <textarea class="img-textarea" name="listing[image][url]" placeholder="e.g. Paste the url of your image" rows="4"></textarea>
                         </label>
 
@@ -31,12 +27,12 @@
 
                         <label>
                             <p>Location</p>
-                            <input type="text" placeholder="e.g. New York City" name="listing[location]">
+                            <input type="text" placeholder="e.g. New York City" name="listing[location]" required>
                         </label>
 
                         <label>
                             <p>Country</p>
-                            <input type="text" placeholder="e.g. United States" name="listing[country]">
+                            <input type="text" placeholder="e.g. United States" name="listing[country]" required>
                         </label>
 
                         <button class="buttons btns" type="submit">Add Listing</button>

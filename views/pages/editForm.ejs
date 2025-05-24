@@ -7,12 +7,12 @@
                     <form class="listingForm" action="/editList/<%= listing._id.toString() %>?_method=PUT" method="post">
                         <label>
                             <p>Title</p>
-                            <textarea name="listing[title]"><%= listing.title %></textarea>
+                            <textarea name="listing[title]" required><%= listing.title %></textarea>
                         </label>
 
                         <label>
                             <p>Description</p>
-                            <textarea name="listing[description]" rows="10"><%= listing.description %></textarea>
+                            <textarea name="listing[description]" rows="10" required><%= listing.description %></textarea>
                         </label>
 
                         <label>
@@ -28,12 +28,12 @@
 
                         <label>
                             <p>Location</p>
-                            <input type="text" name="listing[location]" value="<%= listing.location %>">
+                            <input type="text" name="listing[location]" value="<%= listing.location %>" required>
                         </label>
 
                         <label>
                             <p>Country</p>
-                            <input type="text" value="<%= listing.country %>" name="listing[country]">
+                            <input type="text" value="<%= listing.country %>" name="listing[country]" required>
                         </label>
 
                         <button class="buttons btns" type="submit">Update</button>
