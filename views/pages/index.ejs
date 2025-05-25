@@ -6,7 +6,7 @@
             <% for(list of data) {%>
                     <div class="ind-container">
                         <h3> <%= list.title %> </h3>
-                        <a href="/individualListing/<%=list._id.toString()%>">
+                        <a href="/listing/show/<%=list._id.toString()%>">
                             <section class="content">
                                 <img loading="lazy" src="<%=list.image.url%>" alt="<%= list.image.filename %>">
                                 <p><strong>Description: </strong><%= list.description %></p>
@@ -17,8 +17,8 @@
                         </a>
                         <hr>
                         <!-- <div class="buttons"> -->
-                            <a href="/editList/<%= list._id.toString() %>" class="btns">Edit</a>
-                            <form action="/deleteList/<%= list._id.toString() %>?_method=DELETE" method="post">
+                            <a href="/listing/editList/<%= list._id.toString() %>" class="btns">Edit</a>
+                            <form action="/listing/deleteList/<%= list._id.toString() %>?_method=DELETE" method="post">
                                 <button class="delete btns" type="submit">Delete</button>
                             </form>
                         <!-- </div> -->
@@ -26,7 +26,7 @@
                 <% } %>
         </div>
         <div class="add">
-            <a href="/addList">
+            <a href="/listing/addList">
             <button class="btns">Add new listing</button>
         </a>
         </div>

@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
 });
 
 //home route - which will show all the listings 
-app.get('/airbnbClone', asyncWrap(async (req, res) => {
+app.get('/listing', asyncWrap(async (req, res) => {
     const data = await Listing.find({});
     res.render('pages/index', {
       data
@@ -52,7 +52,7 @@ app.get('/airbnbClone', asyncWrap(async (req, res) => {
 }));
 
 //route to show individual listing
-app.get('/individualListing/:id', asyncWrap(async(req, res, next) => {
+app.get('/listing/show/:id', asyncWrap(async(req, res, next) => {
 
     const {id} = req.params;
     const requiredListing = await Listing.findById(id); 
@@ -65,7 +65,7 @@ app.get('/individualListing/:id', asyncWrap(async(req, res, next) => {
 }));
 
 //route to get edit form 
-app.get('/editList/:id', asyncWrap(async (req, res, next) => {
+app.get('/listing/editList/:id', asyncWrap(async (req, res, next) => {
   const {id} = req.params;
   const requiredListing = await Listing.findById(id);
   if(!requiredListing) {
@@ -75,39 +75,39 @@ app.get('/editList/:id', asyncWrap(async (req, res, next) => {
 }));
 
 //route to update from the edit form
-app.put('/editList/:id', validateSchema, asyncWrap(async (req, res, next ) => {
+app.put('/listing/editList/:id', validateSchema, asyncWrap(async (req, res, next ) => {
 
       const {id} = req.params;
       const requiredListing = await Listing.findByIdAndUpdate(id, req.body.listing);
       if(!requiredListing) {
         return next(new ExpressErr(400, "Something went wrong - User ID is missing"));
       }
-      res.redirect(`/individualListing/${id}`);
+      res.redirect(`/listing/${id}`);
 
 
 }));
 
 //route to show add new list form
-app.get('/addList', asyncWrap(async (req, res, next) => {
+app.get('/listing/addList', asyncWrap(async (req, res, next) => {
   res.render('pages/newListingForm');
 }));
 
 //route to add in the db
-app.post('/addList', validateSchema, asyncWrap(async(req, res, next) => {
+app.post('/listing/addList', validateSchema, asyncWrap(async(req, res, next) => {
   const newListing = new Listing(req.body.listing);
   await newListing.save();
-  res.redirect('/airbnbClone');
+  res.redirect('/listing');
 }));
 
 //route to delete
-app.delete('/deleteList/:id', asyncWrap(async(req, res, next) => {
+app.delete('/listing/deleteList/:id', asyncWrap(async(req, res, next) => {
 
   const {id} = req.params;
   if(!(await Listing.findById(id))) {
     return next(new ExpressErr(400, "Something went wrong - User Id not Found."));
   }
   await Listing.findByIdAndDelete(id);
-  res.redirect('/airbnbClone')
+  res.redirect('/listing')
 
 
 }));
@@ -119,7 +119,7 @@ app.use((err, req, res, next) => {
 });
 
 app.use((req, res) => {
-  res.status(404).render('pages/error', {errStatus: 404, errMessage: "Invalid URL! Page Not Found", link: "/airbnbClone"});
+  res.status(404).render('pages/error', {errStatus: 404, errMessage: "Invalid URL! Page Not Found", link: "/listing"});
 });
 
 app.listen(PORT, () => {

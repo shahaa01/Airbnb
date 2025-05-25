@@ -4,7 +4,7 @@
 <% block('css').append('<link rel="stylesheet" href="/styles/form.css">') %>
         <div class="container">
                 <div class="ind-container">
-                    <form class="listingForm" action="/editList/<%= listing._id.toString() %>?_method=PUT" method="post">
+                    <form class="listingForm" action="/listing/editList/<%= listing._id.toString() %>?_method=PUT" method="post">
                         <label>
                             <p>Title</p>
                             <textarea name="listing[title]" required><%= listing.title %></textarea>
