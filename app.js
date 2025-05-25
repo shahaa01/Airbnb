@@ -78,9 +78,6 @@ app.get('/editList/:id', asyncWrap(async (req, res, next) => {
 app.put('/editList/:id', validateSchema, asyncWrap(async (req, res, next ) => {
 
       const {id} = req.params;
-      if(!req.body.listing) {
-        return next(new ExpressErr(400, "No listing found. Bad Request"));
-      }
       const requiredListing = await Listing.findByIdAndUpdate(id, req.body.listing);
       if(!requiredListing) {
         return next(new ExpressErr(400, "Something went wrong - User ID is missing"));
@@ -97,9 +94,6 @@ app.get('/addList', asyncWrap(async (req, res, next) => {
 
 //route to add in the db
 app.post('/addList', validateSchema, asyncWrap(async(req, res, next) => {
-   if(!req.body.listing) {
-    return next(new ExpressErr(400, "No listing Found.", "/addList"));
-  }
   const newListing = new Listing(req.body.listing);
   await newListing.save();
   res.redirect('/airbnbClone');
