@@ -10,7 +10,7 @@ const ExpressErr = require('./errors/expressErr');
 const asyncWrap = require('./utils/asyncWrap');
 const listings = require('./routes/listing');
 
-//set ejs and required middlewares here
+//Lets set ejs and required middlewares here
 app.set("view engine", 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
