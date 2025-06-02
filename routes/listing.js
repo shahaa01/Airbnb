@@ -1,80 +1,28 @@
 const express = require('express');
 const router = express.Router({mergeParams: true}); //stores the req.params of the parent route
 const asyncWrap = require('../utils/asyncWrap');
-const Listing = require('../models/listing');
-const ExpressErr = require('../errors/expressErr');
-const ListingServerSchema = require('../Validations/listingSchemaValidation');
+const listingController = require('../controllers/listing');
+const middlewares = require('../middlewares');
 
-//middleware function to validate schemas
-const validateSchema = (req, res, next) => {
-  let {error} = ListingServerSchema.validate(req.body);
-  if(error) {
-    return next(new ExpressErr(400, error.details[0].message, req.originalUrl));
-  } 
-  next();
-}
-
-//all the listing routes
 //home route - which will show all the listings 
-router.get('/', asyncWrap(async (req, res) => {
-    const data = await Listing.find({});
-    res.render('pages/index', {
-      data
-    });
-}));
+router.get('/', asyncWrap(listingController.index));
 
 //route to show individual listing
-router.get('/show/:id', asyncWrap(async(req, res, next) => {
-    const {id} = req.params;
-    const requiredListing = await Listing.findById(id); 
-    if(!requiredListing) {
-      return next(new ExpressErr(400, "URL is incorrect. Page not Found."));
-    } 
-    res.render('pages/individualList', {list: requiredListing});
-}));
+router.route('/show/:id')
+.get(asyncWrap(listingController.showListing));
 
 //route to get edit and update the form 
 router
 .route('/editList/:id')
-  .get(asyncWrap(async (req, res, next) => {
-    const {id} = req.params;
-    const requiredListing = await Listing.findById(id);
-    if(!requiredListing) {
-      return next(new ExpressErr(400, "URL is incorrect. Page not Found."));
-    } 
-    res.render('pages/editForm', {listing: requiredListing});
-  }))
-  .put(validateSchema, asyncWrap(async (req, res, next ) => {
-      const {id} = req.params;
-      const requiredListing = await Listing.findByIdAndUpdate(id, req.body.listing);
-      if(!requiredListing) {
-      return next(new ExpressErr(400, "Something went wrong - User ID is missing"));
-      }
-      res.redirect(`/listing/show/${id}`);
-  }));
+  .get(asyncWrap(listingController.editListForm))
+  .put(middlewares.validateSchema, asyncWrap(listingController.updateForm));
 
-//route to show add new list form
-router
-.route
-router.get('/addList', asyncWrap(async (req, res, next) => {
-  res.render('pages/newListingForm');
-}));
-
-//route to add in the db
-router.post('/addList', validateSchema, asyncWrap(async(req, res, next) => {
-  const newListing = new Listing(req.body.listing);
-  await newListing.save();
-  res.redirect('/listing');
-}));
+//route to show add new list form and also post in the db
+router.route('/addList')
+.get(asyncWrap(listingController.newListForm))
+.post(middlewares.validateSchema , asyncWrap(listingController.postNewList));
 
 //route to delete
-router.delete('/deleteList/:id', asyncWrap(async(req, res, next) => {
-  const {id} = req.params;
-  if(!(await Listing.findById(id))) {
-    return next(new ExpressErr(400, "Something went wrong - User Id not Found."));
-  }
-  await Listing.findByIdAndDelete(id);
-  res.redirect('/listing')
-}));
+router.delete('/deleteList/:id', asyncWrap(listingController.deleteListing));
 
 module.exports = router;

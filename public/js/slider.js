@@ -3,7 +3,8 @@
     const value = document.getElementById('slider-value');
 
     slider.addEventListener('input', () => {
-        value.innerHTML = `<strong>Price: &#8377; ${slider.value}`    });
+        value.innerHTML = `<strong>Price: &#8377; ${slider.value}`    
+        });
     });
 
     
