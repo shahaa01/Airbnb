@@ -33,27 +33,29 @@ router.get('/show/:id', asyncWrap(async(req, res, next) => {
     res.render('pages/individualList', {list: requiredListing});
 }));
 
-//route to get edit form 
-router.get('/editList/:id', asyncWrap(async (req, res, next) => {
-  const {id} = req.params;
-  const requiredListing = await Listing.findById(id);
-  if(!requiredListing) {
-    return next(new ExpressErr(400, "URL is incorrect. Page not Found."));
-  } 
-  res.render('pages/editForm', {listing: requiredListing});
-}));
-
-//route to update from the edit form
-router.put('/editList/:id', validateSchema, asyncWrap(async (req, res, next ) => {
+//route to get edit and update the form 
+router
+.route('/editList/:id')
+  .get(asyncWrap(async (req, res, next) => {
     const {id} = req.params;
-    const requiredListing = await Listing.findByIdAndUpdate(id, req.body.listing);
+    const requiredListing = await Listing.findById(id);
     if(!requiredListing) {
-    return next(new ExpressErr(400, "Something went wrong - User ID is missing"));
-    }
-    res.redirect(`/listing/show/${id}`);
-}));
+      return next(new ExpressErr(400, "URL is incorrect. Page not Found."));
+    } 
+    res.render('pages/editForm', {listing: requiredListing});
+  }))
+  .put(validateSchema, asyncWrap(async (req, res, next ) => {
+      const {id} = req.params;
+      const requiredListing = await Listing.findByIdAndUpdate(id, req.body.listing);
+      if(!requiredListing) {
+      return next(new ExpressErr(400, "Something went wrong - User ID is missing"));
+      }
+      res.redirect(`/listing/show/${id}`);
+  }));
 
 //route to show add new list form
+router
+.route
 router.get('/addList', asyncWrap(async (req, res, next) => {
   res.render('pages/newListingForm');
 }));

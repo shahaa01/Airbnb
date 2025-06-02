@@ -9,6 +9,7 @@ const engine = require('ejs-mate');
 const ExpressErr = require('./errors/expressErr');
 const asyncWrap = require('./utils/asyncWrap');
 const listings = require('./routes/listing');
+const Review = require('./models/review');
 
 //Lets set ejs and required middlewares here
 app.set("view engine", 'ejs');
