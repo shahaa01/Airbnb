@@ -1,4 +1,5 @@
 const ListingServerSchema = require('../Validations/listingSchemaValidation');
+const ExpressErr = require('../errors/expressErr');
 
 module.exports.validateSchema = (req, res, next) => {
   let {error} = ListingServerSchema.validate(req.body);
