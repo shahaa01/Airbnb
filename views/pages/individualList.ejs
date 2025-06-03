@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate.ejs') %>
 <% block('title').append(`<title>${list.title}</title>`) %>
 <% block('css').append('<link rel="stylesheet" href="/styles/index.css">') %>
-        <div class="container">
+        <div class="container" style="display: flex; flex-direction: column; align-items: center;">
                 <div class="ind-container">
                     <h3> <%= list.title %> </h3>
                         <div class="content">
@@ -11,7 +11,7 @@
                             <p><strong>Country: </strong><%= list.country %></p>
                             <p><strong>Price: &#8377; </strong><%= list.price %></p>
                         </div>
-                    <hr>
+                     <hr>
                         <!-- <div class="buttons"> -->
                             <a href="/listing/editList/<%= list._id.toString() %>" class="btns">Edit</a>
                             <form action="/listing/deleteList/<%= list._id.toString() %>?_method=DELETE" method="post">
@@ -19,5 +19,45 @@
                             </form>
                         <!-- </div> -->
                 </div>
+
+                <% if(reviews && reviews.length) {%>
+                <section class="review-container">
+                    <h2>Reviews</h2>
+                    <% for(let review of reviews) {%>
+                    <div class="review-card">
+                        <p class="author">Author: <%= review.author %></p>
+                        <p class="rating">Rating: <%= review.rating %></p>
+                        <p class="description">Description: <%= review.description %></p>
+                        <form action="/reviews/<%= review._id %>/delete?_method=DELETE" method="post">
+                            <button type="submit" class="btns buttons">Delete</button>
+                        </form>
+                    </div>
+                    <% } %>
+                </section>
+                <% } %>
+
+
+                <section class="review-form">
+                    <form action="/reviews/<%= list._id%>" method="post">
+                        <label>
+                            <p>Author</p>
+                            <textarea name="review[author]" placeholder="e.g. Joe Daniel" required></textarea>
+                        </label>
+
+                        <label>
+                            <p>Description</p>
+                            <textarea name="review[description]" rows="5" placeholder="e.g. The place was amazing, I loved it." required></textarea>
+                        </label>
+
+                        <label>
+                            <p>Rating</p>
+                            <input id="slider" type="range" name="review[rating]" min="1" max="5" step="1">
+                        </label>
+
+                        <button class="buttons btns" type="submit">Submit</button>
+                    </form>
+                </section>
         </div>
 <% block('script').append('<script src="/js/deleteListingForm.js"></script>') %>
+
+

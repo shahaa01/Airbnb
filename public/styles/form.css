@@ -40,6 +40,7 @@ body .container {
 }
 
 textarea {
+    resize: none;
     width: 90%;
     padding: 0.4rem;
     border-radius: 10px;
@@ -47,8 +48,14 @@ textarea {
 }
 
 .img-textarea {
+    resize: none;
     min-height: fit-content;
     padding: 0.4rem;
+}
+
+textarea:focus, input:focus {
+    border-color: #FF385C;
+    outline: none;
 }
 
 input {
@@ -58,6 +65,10 @@ input {
     border-radius: 10px;
 
 
+}
+
+input[type="range"] {
+    accent-color: #FF385C;
 }
 
 .ind-container {

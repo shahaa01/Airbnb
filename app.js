@@ -5,7 +5,8 @@ const app = express();
 const path = require('path');
 const methodOverride = require('method-override');
 const engine = require('ejs-mate');
-const listings = require('./routes/listing');
+const listingsRoutes = require('./routes/listing');
+const reviewRoutes = require('./routes/reviews');
 
 //Lets set ejs and required middlewares here
 app.set("view engine", 'ejs');
@@ -23,8 +24,12 @@ async function main() {
   await mongoose.connect('mongodb://127.0.0.1:27017/airbnb');
 }
 
-//routes here
-app.use('/listing', listings);
+//routes here for listings
+app.use('/listing', listingsRoutes);
+
+//routes here for reviews
+app.use('/reviews/:id', reviewRoutes);
+
 
 //this is error handling middleware which only handles sync errors - for async we used asyncWrap Functions
 app.use((err, req, res, next) => {

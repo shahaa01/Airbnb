@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   // grab ALL delete forms
-  const deleteForms = document.querySelectorAll('form[action^="/listing/deleteList/"]');
+  const deleteForms = document.querySelectorAll('form[action*="delete"]');
 
   deleteForms.forEach(form => {
     form.addEventListener("submit", e => {

@@ -243,3 +243,129 @@ hr {
     padding: 0.5rem;
     margin: 0.5rem 0;
 }
+
+.review-form {
+  background-color: #fff;
+  max-width: 500px;
+  min-width: 30%;
+  margin: 50px auto;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.review-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.review-form label {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-form p {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+  font-size: 15px;
+}
+
+.review-form textarea {
+  resize: none;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  font-family: inherit;
+  background-color: #fafafa;
+  transition: border 0.3s;
+}
+
+.review-form textarea:focus {
+  border-color: #FF385C;
+  outline: none;
+}
+
+.review-form input[type="range"] {
+  width: 100%;
+  accent-color: #FF385C;
+}
+
+.review-form .buttons.btns {
+  background-color: #FF385C;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.review-form .buttons.btns:hover {
+  background-color: #e0274f;
+}
+
+.review-container {
+  width: 70%;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+  height: 40%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.review-container h2 {
+  font-size: 28px;
+  color: #222;
+  margin-bottom: 20px;
+  font-weight: 600;
+  width: 100%;
+  text-align: center;
+}
+
+.review-card {
+  width: 30%;
+  min-width: fit-content;
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid #eee;
+  transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.review-card:hover {
+  transform: translateY(-2px);
+}
+
+.review-card .author {
+  font-weight: bold;
+  color: #FF385C; 
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.review-card .rating {
+  color: #555;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.review-card .description {
+  font-size: 15px;
+  color: #333;
+  line-height: 1.5;
+}

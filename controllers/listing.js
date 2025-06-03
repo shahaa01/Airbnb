@@ -1,5 +1,6 @@
 const Listing = require('../models/listing');
 const ExpressErr = require('../errors/expressErr');
+const Review = require('../models/review');
 
 module.exports.index = async (req, res) => {
     const data = await Listing.find({});
@@ -13,8 +14,15 @@ module.exports.showListing = async(req, res, next) => {
     const requiredListing = await Listing.findById(id); 
     if(!requiredListing) {
       return next(new ExpressErr(400, "URL is incorrect. Page not Found."));
-    } 
-    res.render('pages/individualList', {list: requiredListing});
+    }
+    const allReview = await Review.find({});
+    let reqReview = [];
+    allReview.forEach((review) => {
+      if(review.listing.equals(id + "")) {
+        reqReview.push(review);
+      }
+    });
+    res.render('pages/individualList', {list: requiredListing, reviews: reqReview});
 }
 
 module.exports.editListForm = async (req, res, next) => {

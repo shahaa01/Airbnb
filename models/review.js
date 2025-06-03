@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Listing = require('../models/listing')
 const {Schema} = mongoose;
 
 const reviewSchema = new Schema({
@@ -8,12 +9,13 @@ const reviewSchema = new Schema({
     },
     listing: {
         type: Schema.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'Listing'
     },
     description: {
         type: String,
         required: true,
-        maxlength: 20
+        maxlength: 1000
     },
     rating: {
         type: Number,
