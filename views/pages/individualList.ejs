@@ -26,7 +26,7 @@
                     <% for(let review of reviews) {%>
                     <div class="review-card">
                         <p class="author">Author: <%= review.author %></p>
-                        <p class="rating">Rating: <%= review.rating %></p>
+                        <p class="starability-result" data-rating="<%= review.rating %>"></p>
                         <p class="description">Description: <%= review.description %></p>
                         <form action="/reviews/<%= review._id %>/delete?_method=DELETE" method="post">
                             <button type="submit" class="btns buttons">Delete</button>
@@ -51,7 +51,18 @@
 
                         <label>
                             <p>Rating</p>
-                            <input id="slider" type="range" name="review[rating]" min="1" max="5" step="1">
+                            <fieldset class="starability-slot">
+                                <input name="review[rating]" type="radio" id="first-rate1" name="rating" value="1" />
+                                <label for="first-rate1" title="Terrible">1 star</label>
+                                <input name="review[rating]" type="radio" id="first-rate2" name="rating" value="2" />
+                                <label for="first-rate2" title="Not good">2 stars</label>
+                                <input name="review[rating]" type="radio" id="first-rate3" name="rating" value="3" />
+                                <label for="first-rate3" title="Average">3 stars</label>
+                                <input name="review[rating]" type="radio" id="first-rate4" name="rating" value="4" />
+                                <label for="first-rate4" title="Very good">4 stars</label>
+                                <input name="review[rating]" type="radio" id="first-rate5" name="rating" value="5" />
+                                <label for="first-rate5" title="Amazing">5 stars</label>
+                            </fieldset>
                         </label>
 
                         <button class="buttons btns" type="submit">Submit</button>
