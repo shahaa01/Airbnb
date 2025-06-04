@@ -1,0 +1,11 @@
+<% if (success && success.length > 0) { %>
+  <div class="flash" style="background: #d4edda; color: #155724; padding: 20px; border-left: 5px solid #28a745; width:fit-content; position: fixed; bottom: 40px; right: 40px; border-radius: 5px; font-size: larger;">
+    ✅ <%= success[0] %>
+  </div>
+<% } %>
+
+<% if (failure && failure.length > 0) { %>
+  <div class="flash" style="background: #f8d7da; color: #721c24; padding: 20px; border-left: 5px solid #dc3545; width:fit-content; position: fixed; bottom: 40px; right: 40px; border-radius: 5px; font-size: larger;">
+    ❌ <%= failure[0] %>
+  </div>
+<% } %>

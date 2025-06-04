@@ -40,6 +40,7 @@ module.exports.updateForm = async (req, res, next ) => {
       if(!requiredListing) {
       return next(new ExpressErr(400, "Something went wrong - User ID is missing"));
       }
+      req.flash('success', 'Listing was updated successfully.');
       res.redirect(`/listing/show/${id}`);
   }
 
@@ -50,6 +51,7 @@ module.exports.newListForm = async (req, res, next) => {
 module.exports.postNewList = async(req, res, next) => {
   const newListing = new Listing(req.body.listing);
   await newListing.save();
+  req.flash('success', 'New Listing Created Successfully!');
   res.redirect('/listing');
 }
 
@@ -59,5 +61,6 @@ module.exports.deleteListing = async(req, res, next) => {
     return next(new ExpressErr(400, "Something went wrong - User Id not Found."));
   }
   await Listing.findByIdAndDelete(id);
+  req.flash('success', 'Listing was deleted successfully.');
   res.redirect('/listing')
 }

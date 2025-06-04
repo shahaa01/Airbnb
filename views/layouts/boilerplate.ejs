@@ -21,10 +21,12 @@
 </head>
 <body>
     <%- include('../components/navbar.ejs') %>
+    <%- include('../components/flash.ejs') %>
     <main>
         <%- body %>
     </main>
     <%- include('../components/footer.ejs') %>
     <%- block('script')%>
+    <script src="/js/flashFade.js"></script>
 </body>
 </html>

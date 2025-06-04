@@ -7,6 +7,9 @@ const methodOverride = require('method-override');
 const engine = require('ejs-mate');
 const listingsRoutes = require('./routes/listing');
 const reviewRoutes = require('./routes/reviews');
+const session = require('express-session');
+const flash = require('connect-flash');
+const {localStore} = require('./middlewares');
 
 //Lets set ejs and required middlewares here
 app.set("view engine", 'ejs');
@@ -16,6 +19,20 @@ app.use(methodOverride('_method'));
 app.use(express.urlencoded({extended: true})); //to parse form data
 app.use(express.json()); //for JSON data
 app.engine('ejs', engine); //to set ejs as ejs-mate
+app.use(session({ //setting session with needed session options
+  resave: false,
+  saveUninitialized: true,
+  secret: "mySecret",
+  cookie: {
+    httpOnly: true,
+    sameSite: 'lax',
+    maxAge: (7 * 24 * 60 * 60 * 1000),
+    secure: false
+  }
+}))
+app.use(flash()); //to use connect-flash 
+app.use(localStore); //using middleware (custom) to store success and failure messages in locals
+
 
 //connecting to the database here
 main().then(() => console.log('Database Connected Successfully🚀')).catch(err => console.log(err));
@@ -33,8 +50,9 @@ app.use('/reviews/:id', reviewRoutes);
 
 //this is error handling middleware which only handles sync errors - for async we used asyncWrap Functions
 app.use((err, req, res, next) => {
-  let {status = 500, message = "Something went wrong, we are extremely sorry!", redirectLink} = err;
-  res.status(status).render('pages/error', {errMessage: err.message, errStatus: status, link: redirectLink});
+  let {status = 500, message = "Something went wrong, we are extremely sorry!"} = err;
+  req.flash('failure', message);
+  res.redirect(req.originalUrl);
 });
 
 app.use((req, res) => {

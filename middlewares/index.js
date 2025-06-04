@@ -1,8 +1,8 @@
 const ListingServerSchema = require('../Validations/listingSchemaValidation');
 const ExpressErr = require('../errors/expressErr');
-const Review = require('../models/review');
 const ReviewServerSchema = require('../Validations/reviewSchemaValidation');
 const Listing = require('../models/listing');
+const flash = require('connect-flash');
 
 module.exports.validateListingSchema = (req, res, next) => {
   let {error} = ListingServerSchema.validate(req.body);
@@ -10,7 +10,7 @@ module.exports.validateListingSchema = (req, res, next) => {
     return next(new ExpressErr(400, error.details[0].message, req.originalUrl));
   } 
   next();
-}
+};
 
 module.exports.validateReviewSchema = async (req, res, next) => {
   const {id} = req.params;
@@ -24,4 +24,10 @@ module.exports.validateReviewSchema = async (req, res, next) => {
     return next(new ExpressErr(400, error.details[0].message, req.originalUrl));
   }
   next();
-}
+};
+
+module.exports.localStore = (req, res, next) => {
+  res.locals.success = req.flash('success');
+  res.locals.failure = req.flash('failure');
+  next();
+};
