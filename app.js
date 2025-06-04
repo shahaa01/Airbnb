@@ -27,7 +27,7 @@ app.use(session({ //setting session with needed session options
     httpOnly: true,
     sameSite: 'lax',
     maxAge: (7 * 24 * 60 * 60 * 1000),
-    secure: false
+    secure: false //for testing locally, its set false; but for production it should always be true
   }
 }))
 app.use(flash()); //to use connect-flash 
