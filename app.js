@@ -52,7 +52,7 @@ app.use('/reviews/:id', reviewRoutes);
 app.use((err, req, res, next) => {
   let {status = 500, message = "Something went wrong, we are extremely sorry!"} = err;
   req.flash('failure', message);
-  res.redirect(req.originalUrl);
+  res.redirect(err.redirectLink);
 });
 
 app.use((req, res) => {
