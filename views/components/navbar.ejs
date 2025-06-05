@@ -13,12 +13,13 @@
         </div>
     </section>
 
-    <section class="search">
-            <form class="home-form" action="">
-                <input class="search-input" type="text" placeholder= "Search" name="search">
-                <p><i class="fa-solid fa-magnifying-glass"></i></p>
-                <button class="submit-btn" type="submit">Search</button>
-            </form>
+    <section class="auth">
+        <% if(currUser) { %>
+            <p><a href="/auth/logout">Logout</a></p>
+        <% } else {%>
+            <p><a href="/auth/signUp">Signup</a></p>
+            <p><a href="/auth/login">Login</a></p>
+        <% } %>
     </section>
 </header>
 <div class="layout-fix"></div>

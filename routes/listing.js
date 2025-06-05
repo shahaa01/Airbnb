@@ -15,14 +15,14 @@ router.route('/show/:id')
 router
 .route('/editList/:id')
   .get(asyncWrap(listingController.editListForm))
-  .put(middlewares.validateListingSchema, asyncWrap(listingController.updateForm));
+  .put(middlewares.isLoggedIn ,middlewares.validateListingSchema, asyncWrap(listingController.updateForm));
 
 //route to show add new list form and also post in the db
 router.route('/addList')
   .get(asyncWrap(listingController.newListForm))
-  .post(middlewares.validateListingSchema , asyncWrap(listingController.postNewList));
+  .post(middlewares.isLoggedIn ,middlewares.validateListingSchema , asyncWrap(listingController.postNewList));
 
 //route to delete
-router.delete('/deleteList/:id', asyncWrap(listingController.deleteListing));
+router.delete('/deleteList/:id', middlewares.isLoggedIn ,asyncWrap(listingController.deleteListing));
 
 module.exports = router;

@@ -2,7 +2,6 @@ const ListingServerSchema = require('../Validations/listingSchemaValidation');
 const ExpressErr = require('../errors/expressErr');
 const ReviewServerSchema = require('../Validations/reviewSchemaValidation');
 const Listing = require('../models/listing');
-const flash = require('connect-flash');
 const UserServerSchema = require('../Validations/userSchemaValidations');
 
 module.exports.validateListingSchema = (req, res, next) => {
@@ -30,6 +29,8 @@ module.exports.validateReviewSchema = async (req, res, next) => {
 module.exports.localStore = (req, res, next) => {
   res.locals.success = req.flash('success');
   res.locals.failure = req.flash('failure');
+  res.locals.error = req.flash('error'); // this is what passport uses
+  res.locals.currUser = req.user;
   next();
 };
 
@@ -38,5 +39,13 @@ module.exports.validateUserSchema = (req, res, next) => {
   if(error) {
     return next(new ExpressErr(400, error.details[0].message, '/auth/signUp'));
   }
+  next();
+}
+
+module.exports.isLoggedIn = (req, res, next) => {
+  if(!req.isAuthenticated()) {
+    return next(new ExpressErr(401, 'Access Denied! You have to login first', '/auth/login'));
+  }
+
   next();
 }

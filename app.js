@@ -14,6 +14,8 @@ const {localStore} = require('./middlewares');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
+const Listing = require('./models/listing');
+const Review = require('./models/review');
 
 //Lets set ejs and required middlewares here
 app.set("view engine", 'ejs');
@@ -35,9 +37,9 @@ app.use(session({ //setting session with needed session options
   }
 }))
 app.use(flash()); //to use connect-flash 
-app.use(localStore); //using middleware (custom) to store success and failure messages in locals
 app.use(passport.initialize()); //initialization passport
 app.use(passport.session()); //enables session based authentication
+app.use(localStore); //using middleware (custom) to store success and failure messages in locals
 passport.use(new LocalStrategy(User.authenticate())); //for passport to use local strategy
 passport.serializeUser(User.serializeUser()); //for passport to store session ID in the server
 passport.deserializeUser(User.deserializeUser()); //for passport to retrieve the user based on session ID and attach the info to req.user which can be accessed from any routes;
@@ -45,9 +47,13 @@ passport.deserializeUser(User.deserializeUser()); //for passport to retrieve the
 
 //connecting to the database here
 main().then(() => console.log('Database Connected Successfully🚀')).catch(err => console.log(err));
+//sync indexes properly according to the schema 
 
 async function main() {
   await mongoose.connect('mongodb://127.0.0.1:27017/airbnb');
+  User.ensureIndexes();
+  Listing.ensureIndexes();
+  Review.ensureIndexes();
 }
 
 //routes for auth
@@ -62,9 +68,15 @@ app.use('/reviews/:id', reviewRoutes);
 
 //this is error handling middleware which only handles sync errors - for async we used asyncWrap Functions
 app.use((err, req, res, next) => {
-  let {status = 500, message = "Something went wrong, we are extremely sorry!"} = err;
+  let {status = 500, message = "Something went wrong!"} = err;
+  
+  // Special case: prevent redirect loops for auth errors
+  if (req.originalUrl.startsWith('/auth') && err.redirectLink === '/auth/login') {
+    return res.status(status).render('pages/loginForm', { error: message });
+  }
+  
   req.flash('failure', message);
-  res.redirect(err.redirectLink);
+  res.redirect(err.redirectLink || '/listing');
 });
 
 app.use((req, res) => {

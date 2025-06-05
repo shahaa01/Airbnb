@@ -439,3 +439,37 @@ hr {
   font-weight: 600;
 }
 
+/* Auth section of the navbar */
+/* Auth section styling */
+.auth {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.auth p {
+  margin: 0;
+  font-size: large;
+}
+
+.auth a {
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.auth a:hover {
+  background-color: #f7f7f7;
+  border-color: #ccc;
+  color: #ff385c;
+  cursor: pointer;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
