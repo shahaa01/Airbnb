@@ -3,6 +3,7 @@ const ExpressErr = require('../errors/expressErr');
 const ReviewServerSchema = require('../Validations/reviewSchemaValidation');
 const Listing = require('../models/listing');
 const flash = require('connect-flash');
+const UserServerSchema = require('../Validations/userSchemaValidations');
 
 module.exports.validateListingSchema = (req, res, next) => {
   let {error} = ListingServerSchema.validate(req.body);
@@ -31,3 +32,11 @@ module.exports.localStore = (req, res, next) => {
   res.locals.failure = req.flash('failure');
   next();
 };
+
+module.exports.validateUserSchema = (req, res, next) => {
+  let {error} = UserServerSchema.validate(req.body);
+  if(error) {
+    return next(new ExpressErr(400, error.details[0].message, '/auth/signUp'));
+  }
+  next();
+}

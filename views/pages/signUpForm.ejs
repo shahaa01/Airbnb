@@ -1,0 +1,24 @@
+<% layout('layouts/boilerplate.ejs') %>
+<% block('title').append('<title>SignUp</title>') %>
+<% block('css').append('<link rel="stylesheet" href="/styles/index.css">') %>
+
+  <div class="signup-container">
+    <form class="signup-form" method="POST" action="/auth/signup">
+      <h2>Create an Account</h2>
+      
+      <label for="username">Username</label>
+      <input type="text" id="username" name="user[username]" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="user[email]" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="user[password]" required />
+
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" name="user[confirmPassword]" required />
+
+      <button type="submit">Sign Up</button>
+      <p class="signin-link">Already have an account? <a href="/login">Log in</a></p>
+    </form>
+  </div>

@@ -7,9 +7,13 @@ const methodOverride = require('method-override');
 const engine = require('ejs-mate');
 const listingsRoutes = require('./routes/listing');
 const reviewRoutes = require('./routes/reviews');
+const authRoutes = require('./routes/authRoutes');
 const session = require('express-session');
 const flash = require('connect-flash');
 const {localStore} = require('./middlewares');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
 
 //Lets set ejs and required middlewares here
 app.set("view engine", 'ejs');
@@ -26,12 +30,17 @@ app.use(session({ //setting session with needed session options
   cookie: {
     httpOnly: true,
     sameSite: 'lax',
-    maxAge: (7 * 24 * 60 * 60 * 1000),
+    maxAge: (7 * 24 * 60 * 60 * 1000), //7 days
     secure: false //for testing locally, its set false; but for production it should always be true
   }
 }))
 app.use(flash()); //to use connect-flash 
 app.use(localStore); //using middleware (custom) to store success and failure messages in locals
+app.use(passport.initialize()); //initialization passport
+app.use(passport.session()); //enables session based authentication
+passport.use(new LocalStrategy(User.authenticate())); //for passport to use local strategy
+passport.serializeUser(User.serializeUser()); //for passport to store session ID in the server
+passport.deserializeUser(User.deserializeUser()); //for passport to retrieve the user based on session ID and attach the info to req.user which can be accessed from any routes;
 
 
 //connecting to the database here
@@ -40,6 +49,9 @@ main().then(() => console.log('Database Connected Successfully🚀')).catch(err 
 async function main() {
   await mongoose.connect('mongodb://127.0.0.1:27017/airbnb');
 }
+
+//routes for auth
+app.use('/auth', authRoutes);
 
 //routes here for listings
 app.use('/listing', listingsRoutes);
