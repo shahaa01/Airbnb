@@ -80,6 +80,13 @@ app.use('/listing', listingsRoutes);
 //routes here for reviews
 app.use('/reviews/:id', reviewRoutes);
 
+app.get('/', asyncWrap(async (req, res) => {
+    const data = await Listing.find();
+    res.render('pages/index', {
+      data
+    });
+}));
+
 //this is error handling middleware which only handles sync errors - for async we used asyncWrap Functions
 app.use((err, req, res, next) => {
   let {status = 500, message = "Something went wrong!"} = err;
