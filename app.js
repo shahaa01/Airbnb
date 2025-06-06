@@ -17,6 +17,7 @@ const User = require('./models/user');
 const Listing = require('./models/listing');
 const Review = require('./models/review');
 const MongoStore = require('connect-mongo');
+const asyncWrap = require('./utils/asyncWrap');
 
 require('dotenv').config(); //to configure environmental variables in process.env
 
