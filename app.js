@@ -19,6 +19,8 @@ const Review = require('./models/review');
 const MongoStore = require('connect-mongo');
 const asyncWrap = require('./utils/asyncWrap');
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 require('dotenv').config(); //to configure environmental variables in process.env
 
 const dbUrl = process.env.MONGO_ATLAS_URL; //mongodb atlas url 
@@ -40,6 +42,10 @@ const store = MongoStore.create({
   touchAfter: 24 * 60
 });
 
+if(isProduction) {
+  app.set('trust proxy', 1); // 👈 This tells Express to trust the Render proxy
+}
+
 app.use(session({ //setting session with needed session options
   store,
   secret: process.env.SECRET_CODE,
@@ -49,7 +55,7 @@ app.use(session({ //setting session with needed session options
     httpOnly: true,
     sameSite: 'lax',
     maxAge: (7 * 24 * 60 * 60 * 1000), //7 days
-    secure: true 
+    secure: isProduction 
   }
 }))
 app.use(flash()); //to use connect-flash 
