@@ -22,28 +22,45 @@ module.exports.showListing = async(req, res, next) => {
 
 module.exports.editListForm = async (req, res, next) => {
     const {id} = req.params;
-    const requiredListing = await Listing.findById(id);
+    const requiredListing = await Listing.findById(id).populate('owner');
     if(!requiredListing) {
       return next(new ExpressErr(400, "URL is incorrect. Page not Found."));
+    }
+    if(!req.user._id.equals(requiredListing.owner._id)) {
+      req.flash('failure', 'Access Denied, Login first');
+      return res.redirect('/auth/login');
     } 
     res.render('pages/editForm', {listing: requiredListing});
   }
 
 module.exports.updateForm = async (req, res, next ) => {
       const {id} = req.params;
-      const requiredListing = await Listing.findByIdAndUpdate(id, req.body.listing);
+      const requiredListing = await Listing.findById(id).populate('owner');
       if(!requiredListing) {
       return next(new ExpressErr(400, "Something went wrong - User ID is missing"));
       }
+      if(!req.user._id.equals(requiredListing.owner._id)) {
+        req.flash('failure', 'Access Denied, Login first');
+        return res.redirect('/auth/login');
+      } 
+      await Listing.findByIdAndUpdate(id, req.body.listing);
       req.flash('success', 'Listing was updated successfully.');
       res.redirect(`/listing/show/${id}`);
   }
 
 module.exports.newListForm = async (req, res, next) => {
+  if(!req.user) {
+    req.flash('failure', 'Access Denied, Login first');
+    return res.redirect('/auth/login');
+  }
   res.render('pages/newListingForm');
 }
 
 module.exports.postNewList = async(req, res, next) => {
+  if(!req.user) {
+    req.flash('failure', 'Access Denied, Login first');
+    return res.redirect('/auth/login');
+  }
   console.log(req.body.listing);
   const newListing = new Listing(req.body.listing);
   await newListing.save();
@@ -56,7 +73,11 @@ module.exports.deleteListing = async(req, res, next) => {
   if(!(await Listing.findById(id))) {
     return next(new ExpressErr(400, "Something went wrong - User Id not Found."));
   }
-  await Listing.findByIdAndDelete(id);
+  const reqListing = await Listing.findById(id).populate('owner');
+  if(!req.user._id.equals(reqListing.owner._id)) {
+    req.flash('failure', 'Access Denied, Login first');
+    return res.redirect('/auth/login');
+  }
   req.flash('success', 'Listing was deleted successfully.');
   res.redirect('/listing')
 }
