@@ -5,7 +5,12 @@
                 <i class="fa-regular fa-compass"></i>
             </a>
         </div>
-        <div class="links">
+
+        <button class="hamburger" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="links" id="nav-menu">
             <a href="/listing">Home</a>
             <% if(currUser) {%>
             <a href="/listing/addList">Create</a>
@@ -15,7 +20,7 @@
         </div>
     </section>
 
-    <section class="auth">
+    <section class="auth" id="auth-menu">
         <% if(currUser) { %>
             <p><a href="/auth/logout">Logout</a></p>
         <% } else {%>
