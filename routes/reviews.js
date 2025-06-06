@@ -6,7 +6,7 @@ const reviewController = require('../controllers/review');
 
 //routes here to post the reviews
 router.route('/')
-    .post(middlewares.validateReviewSchema, asyncWrap(reviewController.postReview))
+    .post(middlewares.isLoggedIn, middlewares.validateReviewSchema, asyncWrap(reviewController.postReview))
 
 router.route('/delete')
     .delete(asyncWrap(reviewController.deleteReview));

@@ -6,7 +6,10 @@ async function initDb() {
     //delete existing data
     try {
         await Listing.deleteMany({});
-        await Listing.insertMany(data);
+        for(let listing of data) {
+            const newListing = new Listing({...listing, owner: '68425d9cf493aa7198d5be15'});
+            await newListing.save();
+        }
 
         console.log('Data successfully saved in Database🚀');
     } catch(err) {

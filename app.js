@@ -65,7 +65,6 @@ app.use('/listing', listingsRoutes);
 //routes here for reviews
 app.use('/reviews/:id', reviewRoutes);
 
-
 //this is error handling middleware which only handles sync errors - for async we used asyncWrap Functions
 app.use((err, req, res, next) => {
   let {status = 500, message = "Something went wrong!"} = err;

@@ -2,15 +2,7 @@ const joi = require('joi');
 
 const reviewServerSchema = joi.object({
     review: joi.object({
-        author: joi.string()
-        .required()
-        .custom(onlyNumbers)
-        .messages({
-            "string.onlyNumbers" : "Not a valid Author name. Please enter a valid author name.",
-            "string.base" : "Not a valid Author name. Please enter a valid author name.",
-            "string.empty" : "Author name is required, it cannot be empty.",
-            "any.required" : "Author name is required, it cannot be empty"
-        }),
+        author: joi.required(),
 
         listing: joi.required(),
 

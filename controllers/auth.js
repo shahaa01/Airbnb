@@ -39,7 +39,8 @@ module.exports.loginForm = async(req, res, next) => {
 
 module.exports.loginUser = (req, res, next) => {
     req.flash('success', `Welcome back ${req.user.name} !`);
-    res.redirect('/listing');
+    const redirectUrl = res.locals?.redirectUrl;
+    res.redirect(redirectUrl || '/listing');
 }
 
 module.exports.logout = (req, res, next) => {

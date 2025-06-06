@@ -5,6 +5,8 @@ const Listing = require('../models/listing');
 const UserServerSchema = require('../Validations/userSchemaValidations');
 
 module.exports.validateListingSchema = (req, res, next) => {
+  req.body.listing.owner = req?.user._id.toString();
+  console.log(req.body.listing);
   let {error} = ListingServerSchema.validate(req.body);
   if(error) {
     return next(new ExpressErr(400, error.details[0].message, req.originalUrl));
@@ -19,6 +21,7 @@ module.exports.validateReviewSchema = async (req, res, next) => {
     return next(new ExpressErr(400, "No Listing was Found for the given Listing ID"));
   }
   req.body.review.listing = requiredListing;
+  req.body.review.author = req?.user._id;
   let {error} = ReviewServerSchema.validate(req.body);
   if(error) {
     return next(new ExpressErr(400, error.details[0].message, `/listing/show/${id}`));
@@ -44,8 +47,22 @@ module.exports.validateUserSchema = (req, res, next) => {
 
 module.exports.isLoggedIn = (req, res, next) => {
   if(!req.isAuthenticated()) {
+    const {id} = req.params;
+    let originalUrl = req.originalUrl + "";
+    if(originalUrl.includes('reviews')) {
+      originalUrl = `/listing/show/${id}`
+    }
+    req.session.redirectUrl = originalUrl;
     return next(new ExpressErr(401, 'Access Denied! You have to login first', '/auth/login'));
   }
 
   next();
 }
+
+module.exports.saveRedirectUrl = (req, res, next) => {
+  if(req.session.redirectUrl) {
+    res.locals.redirectUrl = req.session.redirectUrl; //passport.authenticate resets the session so this middleware has to be called before passport.authenticate
+  }
+  next();
+}
+

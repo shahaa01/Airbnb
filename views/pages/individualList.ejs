@@ -10,7 +10,11 @@
                             <p><strong>Location: </strong><%= list.location %></p>
                             <p><strong>Country: </strong><%= list.country %></p>
                             <p><strong>Price: &#8377; </strong><%= list.price %></p>
+                            <% if(list.owner) { %>
                             <p><strong>Owned By: </strong><%= list.owner.name %></p>
+                            <% } else { %>
+                            <p><strong>Owned By: </strong>Unknown</p>
+                            <% } %>
                         </div>
                      <hr>
                         <!-- <div class="buttons"> -->
@@ -26,7 +30,7 @@
                     <h2>Reviews</h2>
                     <% for(let review of reviews) {%>
                     <div class="review-card">
-                        <p class="author">Author: <%= review.author %></p>
+                        <p class="author">Author: <%= review.author.name %></p>
                         <p class="starability-result" data-rating="<%= review.rating %>"></p>
                         <p class="description">Description: <%= review.description %></p>
                         <form action="/reviews/<%= review._id %>/delete?_method=DELETE" method="post">
@@ -40,11 +44,6 @@
 
                 <section class="review-form">
                     <form action="/reviews/<%= list._id%>" method="post">
-                        <label>
-                            <p>Author</p>
-                            <textarea name="review[author]" placeholder="e.g. Joe Daniel" required></textarea>
-                        </label>
-
                         <label>
                             <p>Description</p>
                             <textarea name="review[description]" rows="5" placeholder="e.g. The place was amazing, I loved it." required></textarea>

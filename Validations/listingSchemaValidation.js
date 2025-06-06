@@ -69,6 +69,16 @@ const ListingServerSchema = joi.object({
         "string.empty" : "Country is required.",
         "any.required" : "Country is required."
     }),
+    owner: joi.string()
+    .hex()
+    .length(24)
+    .required()
+    .messages({
+        "string.base": "Owner ID must be a string.",
+        "string.length": "Owner ID must be exactly 24 characters.",
+        "string.hex": "Owner ID must be a valid hexadecimal string.",
+        "any.required": "Owner ID is required."
+    })
     }).required()
 });
 

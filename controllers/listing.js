@@ -16,13 +16,11 @@ module.exports.showListing = async(req, res, next) => {
       return next(new ExpressErr(400, "URL is incorrect. Page not Found."));
     }
     await requiredListing.populate('owner');
-    const allReview = await Review.find({});
-    let reqReview = [];
-    allReview.forEach((review) => {
-      if(review.listing.equals(id + "")) {
-        reqReview.push(review);
-      }
-    });
+    
+    const reqReview = await Review.find({listing: id}).populate('author');
+
+    console.log(reqReview);
+
     res.render('pages/individualList', {list: requiredListing, reviews: reqReview});
 }
 
@@ -50,7 +48,8 @@ module.exports.newListForm = async (req, res, next) => {
 }
 
 module.exports.postNewList = async(req, res, next) => {
-  const newListing = new Listing({...req.body.listing, owner: req.user});
+  console.log(req.body.listing);
+  const newListing = new Listing(req.body.listing);
   await newListing.save();
   req.flash('success', 'New Listing Created Successfully!');
   res.redirect('/listing');

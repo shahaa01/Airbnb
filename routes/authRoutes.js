@@ -12,7 +12,7 @@ router.route('/signUp')
 
 router.route('/login')
     .get(asyncWrap(authController.loginForm))
-    .post(passport.authenticate('local', {failureRedirect: '/auth/login', failureFlash: true}), authController.loginUser);
+    .post(middlewares.saveRedirectUrl, passport.authenticate('local', {failureRedirect: '/auth/login', failureFlash: true}), authController.loginUser);
 
 
 router.route('/logout') 
