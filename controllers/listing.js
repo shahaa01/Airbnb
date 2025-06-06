@@ -11,15 +11,11 @@ module.exports.index = async (req, res) => {
 
 module.exports.showListing = async(req, res, next) => {
     const {id} = req.params;
-    const requiredListing = await Listing.findById(id); 
+    const requiredListing = await Listing.findById(id).populate('owner'); 
     if(!requiredListing) {
       return next(new ExpressErr(400, "URL is incorrect. Page not Found."));
-    }
-    await requiredListing.populate('owner');
-    
+    }    
     const reqReview = await Review.find({listing: id}).populate('author');
-
-    console.log(reqReview);
 
     res.render('pages/individualList', {list: requiredListing, reviews: reqReview});
 }

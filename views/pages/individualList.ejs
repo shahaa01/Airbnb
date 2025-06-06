@@ -18,10 +18,12 @@
                         </div>
                      <hr>
                         <!-- <div class="buttons"> -->
+                            <% if(currUser && currUser._id.equals(list.owner._id)) { %>
                             <a href="/listing/editList/<%= list._id.toString() %>" class="btns">Edit</a>
                             <form action="/listing/deleteList/<%= list._id.toString() %>?_method=DELETE" method="post">
                                 <button class="delete btns" type="submit">Delete</button>
                             </form>
+                            <% } %>
                         <!-- </div> -->
                 </div>
 
@@ -33,9 +35,11 @@
                         <p class="author">Author: <%= review.author.name %></p>
                         <p class="starability-result" data-rating="<%= review.rating %>"></p>
                         <p class="description">Description: <%= review.description %></p>
+                        <% if(currUser && currUser._id.equals(review.author._id)) { %>
                         <form action="/reviews/<%= review._id %>/delete?_method=DELETE" method="post">
                             <button type="submit" class="btns buttons">Delete</button>
                         </form>
+                        <% } %>
                     </div>
                     <% } %>
                 </section>

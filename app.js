@@ -39,7 +39,7 @@ app.use(session({ //setting session with needed session options
 app.use(flash()); //to use connect-flash 
 app.use(passport.initialize()); //initialization passport
 app.use(passport.session()); //enables session based authentication
-app.use(localStore); //using middleware (custom) to store success and failure messages in locals
+app.use(localStore); //using middleware (custom) to store success and failure messages and other important things in locals
 passport.use(new LocalStrategy(User.authenticate())); //for passport to use local strategy
 passport.serializeUser(User.serializeUser()); //for passport to store session ID in the server
 passport.deserializeUser(User.deserializeUser()); //for passport to retrieve the user based on session ID and attach the info to req.user which can be accessed from any routes;

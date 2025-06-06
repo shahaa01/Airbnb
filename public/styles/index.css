@@ -234,6 +234,7 @@ hr {
 .btns:hover {
     cursor: pointer;
     background-color: #FF385C;
+    color: white;
 }
 
 .btns:active {
