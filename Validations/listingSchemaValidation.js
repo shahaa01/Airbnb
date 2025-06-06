@@ -60,8 +60,7 @@ const ListingServerSchema = joi.object({
     .custom((value, helper) => {
     if(/^\d+/.test(value)){
         return helper.error("string.onlyNumbers");
-    } 
-
+    }
     return value;
     }).required()
     .messages({

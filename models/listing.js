@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const defaultImageLink = "https://www.shutterstock.com/image-photo/impressive-autumn-landscape-during-sunset-600nw-1459051037.jpg";
+const User = require('../models/user');
 
 //lets define our Schema
 const listingSchema = new Schema({
@@ -32,6 +33,11 @@ const listingSchema = new Schema({
     },
     country: {
         type: String,
+        required: true
+    },
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
         required: true
     }
 });

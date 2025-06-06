@@ -15,6 +15,7 @@ module.exports.showListing = async(req, res, next) => {
     if(!requiredListing) {
       return next(new ExpressErr(400, "URL is incorrect. Page not Found."));
     }
+    await requiredListing.populate('owner');
     const allReview = await Review.find({});
     let reqReview = [];
     allReview.forEach((review) => {
@@ -49,7 +50,7 @@ module.exports.newListForm = async (req, res, next) => {
 }
 
 module.exports.postNewList = async(req, res, next) => {
-  const newListing = new Listing(req.body.listing);
+  const newListing = new Listing({...req.body.listing, owner: req.user});
   await newListing.save();
   req.flash('success', 'New Listing Created Successfully!');
   res.redirect('/listing');
