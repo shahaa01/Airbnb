@@ -16,6 +16,11 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const Listing = require('./models/listing');
 const Review = require('./models/review');
+const MongoStore = require('connect-mongo');
+
+require('dotenv').config(); //to configure environmental variables in process.env
+
+const dbUrl = process.env.MONGO_ATLAS_URL; //mongodb atlas url 
 
 //Lets set ejs and required middlewares here
 app.set("view engine", 'ejs');
@@ -25,15 +30,25 @@ app.use(methodOverride('_method'));
 app.use(express.urlencoded({extended: true})); //to parse form data
 app.use(express.json()); //for JSON data
 app.engine('ejs', engine); //to set ejs as ejs-mate
+
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  crypto: {
+    secret: process.env.SECRET_CODE
+  },
+  touchAfter: 24 * 60
+});
+
 app.use(session({ //setting session with needed session options
+  store,
+  secret: process.env.SECRET_CODE,
   resave: false,
-  saveUninitialized: true,
-  secret: "mySecret",
+  saveUninitialized: false,
   cookie: {
     httpOnly: true,
     sameSite: 'lax',
     maxAge: (7 * 24 * 60 * 60 * 1000), //7 days
-    secure: false //for testing locally, its set false; but for production it should always be true
+    secure: true 
   }
 }))
 app.use(flash()); //to use connect-flash 
@@ -50,10 +65,10 @@ main().then(() => console.log('Database Connected Successfully🚀')).catch(err 
 //sync indexes properly according to the schema 
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/airbnb');
-  User.ensureIndexes();
-  Listing.ensureIndexes();
-  Review.ensureIndexes();
+  await mongoose.connect(dbUrl);
+  User.syncIndexes();
+  Listing.syncIndexes();
+  Review.syncIndexes();
 }
 
 //routes for auth

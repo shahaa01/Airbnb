@@ -29,8 +29,12 @@ const ListingServerSchema = joi.object({
         }),
         url: joi.string()
         .uri()
-        .allow("")
-        .default("https://www.shutterstock.com/image-photo/impressive-autumn-landscape-during-sunset-600nw-1459051037.jpg")
+        .allow('')
+        .default('https://www.shutterstock.com/image-photo/impressive-autumn-landscape-during-sunset-600nw-1459051037.jpg')
+        .messages({
+            'string.base': 'Image URL must be a valid text string.',
+            'string.uri': 'Please provide a valid URL.',
+        })
     }).optional(),
     price: joi.number()
     .min(0)

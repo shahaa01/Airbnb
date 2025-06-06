@@ -1,6 +1,7 @@
 <% layout('layouts/boilerplate.ejs') %>
 <% block('title').append('<title>AirBnb</title>') %>
 <% block('css').append('<link rel="stylesheet" href="/styles/index.css"') %>
+<% if(data && data.length > 0) { %>
         <h1>All Listings</h1>
         <div class="container">
             <% for(list of data) {%>
@@ -27,6 +28,9 @@
                     </div>
                 <% } %>
         </div>
+    <% } else { %>
+            <h1>No Listings Yet!</h1>
+        <% } %>
         <% if(currUser) { %>
         <div class="add">
             <a href="/listing/addList">

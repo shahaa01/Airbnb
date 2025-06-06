@@ -317,7 +317,7 @@ hr {
   max-width: 800px;
   margin: 40px auto;
   padding: 0 20px;
-  height: 40%;
+  height: fit-content;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

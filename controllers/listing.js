@@ -3,7 +3,7 @@ const ExpressErr = require('../errors/expressErr');
 const Review = require('../models/review');
 
 module.exports.index = async (req, res) => {
-    const data = await Listing.find({});
+    const data = await Listing.find();
     res.render('pages/index', {
       data
     });
