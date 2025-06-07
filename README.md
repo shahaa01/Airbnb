@@ -143,7 +143,7 @@ git push origin main
 
 ## 🚀 Live Demo
 
-🌐 [Deployed Project on Render](#) (coming soon)
+[Deployed Project on Render](https://staynest-tiiq.onrender.com)
 
 ---
 
