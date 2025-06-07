@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "23.11.0"
+  },
   "name": "project_air_bnb",
   "version": "1.0.0",
   "main": "index.js",

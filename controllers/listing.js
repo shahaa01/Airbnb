@@ -39,10 +39,12 @@ module.exports.updateForm = async (req, res, next ) => {
       if(!requiredListing) {
       return next(new ExpressErr(400, "Something went wrong - User ID is missing"));
       }
+
       if(!req.user._id.equals(requiredListing.owner._id)) {
         req.flash('failure', 'Access Denied, Login first');
         return res.redirect('/auth/login');
-      } 
+      }
+       
       await Listing.findByIdAndUpdate(id, req.body.listing);
       req.flash('success', 'Listing was updated successfully.');
       res.redirect(`/listing/show/${id}`);
@@ -61,7 +63,6 @@ module.exports.postNewList = async(req, res, next) => {
     req.flash('failure', 'Access Denied, Login first');
     return res.redirect('/auth/login');
   }
-  console.log(req.body.listing);
   const newListing = new Listing(req.body.listing);
   await newListing.save();
   req.flash('success', 'New Listing Created Successfully!');
@@ -74,10 +75,14 @@ module.exports.deleteListing = async(req, res, next) => {
     return next(new ExpressErr(400, "Something went wrong - User Id not Found."));
   }
   const reqListing = await Listing.findById(id).populate('owner');
-  if(!req.user._id.equals(reqListing.owner._id)) {
-    req.flash('failure', 'Access Denied, Login first');
+
+  if(!(req.user._id.equals(reqListing.owner._id))) {
+    req.flash('failure', 'Access Denied, You cannot delete listings created by others.');
     return res.redirect('/auth/login');
   }
+
+  await Listing.findByIdAndDelete(id);
+
   req.flash('success', 'Listing was deleted successfully.');
   res.redirect('/listing')
 }

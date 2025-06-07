@@ -102,9 +102,11 @@ app.use((err, req, res, next) => {
   if (req.originalUrl.startsWith('/auth') && err.redirectLink === '/auth/login') {
     return res.status(status).render('pages/loginForm', { error: message });
   }
-  
-  req.flash('failure', message);
-  res.redirect(err.redirectLink || '/listing');
+  if(req.flash) {
+    req.flash('failure', message);
+    res.redirect(err.redirectLink || '/listing');
+  }
+
 });
 
 app.use((req, res) => {

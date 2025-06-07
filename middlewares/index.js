@@ -6,7 +6,6 @@ const UserServerSchema = require('../Validations/userSchemaValidations');
 
 module.exports.validateListingSchema = (req, res, next) => {
   req.body.listing.owner = req?.user._id.toString();
-  console.log(req.body.listing);
   let {error} = ListingServerSchema.validate(req.body);
   if(error) {
     return next(new ExpressErr(400, error.details[0].message, req.originalUrl));
