@@ -1,6 +1,7 @@
-# 🏡 AirBnB Clone – Full Stack Project (MEN Stack + HTML/CSS/JS)
+# 🏡 StayNest – Full Stack Project (MEN Stack + HTML/CSS/JS)
 
-Welcome to my journey of full-stack development project where I build a **fully functional AirBnB clone**!  
+Welcome to my journey of full-stack development project where I build a **fully functional StayNest!  
+StayNest is a fully functional web application built from the ground up using the MEN Stack (MongoDB, Express.js, Node.js) alongside HTML, CSS, and vanilla JavaScript for the frontend. This project showcases a complete end-to-end implementation of a vacation rental service, featuring core functionalities such as user authentication, listing creation, booking management, and more
 This project leverages the **MEN Stack** (MongoDB, Express.js, Node.js) along with **HTML, CSS, and JavaScript** for the frontend (without React).
 
 ---
