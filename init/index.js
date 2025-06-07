@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const data = require('./data');
 const Listing = require('../models/listing');
+const dbUrl = process.env.MONGO_ATLAS_URL;
 
 async function initDb() {
     //delete existing data
@@ -23,7 +24,7 @@ async function initDb() {
 main().then(() => console.log('Database Connected Successfully🚀')).catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/airbnb');
+  await mongoose.connect(dbUrl);
 
   //initializing database
   initDb();

@@ -21,7 +21,7 @@ module.exports.saveUser = async(req, res, next) => {
     req.login(registeredUser, (err) => {
         if(err)
             return next(err);
-        req.flash('success', `Welcome to airbnb, ${registeredUser.name}!`);
+        req.flash('success', `Welcome to StayNest, ${registeredUser.name}!`);
         res.redirect('/listing');
     })
     } catch(err) {
