@@ -17,7 +17,7 @@ const User = require('./models/user');
 const Listing = require('./models/listing');
 const Review = require('./models/review');
 const MongoStore = require('connect-mongo');
-const asyncWrap = require('./utils/asyncWrap');
+const homeRoute = require('./routes/homeRoutes');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -66,7 +66,6 @@ passport.use(new LocalStrategy(User.authenticate())); //for passport to use loca
 passport.serializeUser(User.serializeUser()); //for passport to store session ID in the server
 passport.deserializeUser(User.deserializeUser()); //for passport to retrieve the user based on session ID and attach the info to req.user which can be accessed from any routes;
 
-
 //connecting to the database here
 main().then(() => console.log('Database Connected Successfully🚀')).catch(err => console.log(err));
 //sync indexes properly according to the schema 
@@ -87,12 +86,7 @@ app.use('/listing', listingsRoutes);
 //routes here for reviews
 app.use('/reviews/:id', reviewRoutes);
 
-app.get('/', asyncWrap(async (req, res) => {
-    const data = await Listing.find();
-    res.render('pages/index', {
-      data
-    });
-}));
+app.use('/', homeRoute);
 
 //this is error handling middleware which only handles sync errors - for async we used asyncWrap Functions
 app.use((err, req, res, next) => {
